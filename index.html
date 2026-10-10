@@ -1,0 +1,1488 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Toko Tika — Game Matematika SD/MI</title>
+<style>
+:root{--g:#19864c;--g2:#0d6136;--o:#ff9f2f;--y:#ffd64d;--ink:#26362e}
+*{box-sizing:border-box}body{margin:0;background:#e1f3e6;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}
+
+/* HEADER */
+.top{background:linear-gradient(90deg,var(--g2),var(--g));color:#fff;padding:9px 15px;display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;z-index:10;box-shadow:0 4px 18px rgba(13,97,54,.25)}
+.logo{font-weight:1000;font-size:1.35rem;display:flex;align-items:center;gap:7px}
+.logo b{color:var(--y)}
+.stats{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pill{background:#ffffff20;border:1px solid #ffffff30;border-radius:99px;padding:5px 9px;font-weight:800;font-size:.8rem}
+.pill-btn{background:#ffffff25;border:1px solid #ffffff45;color:#fff;cursor:pointer;transition:.15s;font-family:inherit}
+.pill-btn:hover{background:#ffffff45;transform:scale(1.05)}
+.icon-btn{position:relative;width:34px;height:34px;border-radius:50%;background:#ffffff25;border:1px solid #ffffff40;color:#fff;font-size:1.05rem;display:grid;place-items:center;transition:.18s;margin-left:2px}
+.icon-btn:hover{background:#ffffff50;transform:scale(1.08)}
+.icon-btn:active{transform:scale(.96)}
+.icon-badge{position:absolute;top:-3px;right:-3px;background:#ef4444;color:#fff;min-width:17px;height:17px;border-radius:99px;font-size:.62rem;font-weight:900;display:grid;place-items:center;padding:0 4px;border:2px solid #0d6136;line-height:1}
+.icon-btn.mode-flash-active{background:linear-gradient(135deg,#f59e0b,#dc2626);border-color:#fff}
+.icon-btn.mode-duel-active{background:linear-gradient(135deg,#8b5cf6,#6d28d9);border-color:#fff}
+
+/* LAYOUT */
+main{max-width:1400px;margin:auto;padding:14px}
+.layout{display:grid;grid-template-columns:30fr 70fr;gap:14px;align-items:start}
+.panel,.shop{background:transparent;padding:0;border:none;box-shadow:none;border-radius:0;min-width:0;min-height:0}
+
+/* PHONE FRAME 9:16 */
+.phone-frame{
+  background:linear-gradient(160deg,#ffffff 0%,#fafafc 40%,#e8e8ed 100%);
+  border-radius:44px;padding:8px 8px 8px;
+  box-shadow:0 22px 46px rgba(15,23,42,.22),0 8px 18px rgba(15,23,42,.12),inset 0 0 0 1px rgba(0,0,0,.06),inset 0 1px 1px rgba(255,255,255,.95),inset 0 -1px 2px rgba(0,0,0,.05);
+  position:relative;aspect-ratio:9 / 16;width:100%;max-width:400px;margin:0 auto;display:flex;flex-direction:column;transition:box-shadow .4s;
+}
+.phone-top{display:flex;align-items:center;justify-content:center;gap:8px;padding:4px 4px 6px;flex-shrink:0}
+.phone-camera{width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#2c5282 0%,#1a1a1a 60%,#000 100%);box-shadow:inset 0 0 2px #000,0 0 0 1px rgba(0,0,0,.15)}
+.phone-speaker{width:52px;height:5px;border-radius:99px;background:linear-gradient(180deg,#c8c8ce,#a5a5ad);box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -1px 1px rgba(0,0,0,.15)}
+.phone-screen{flex:1;min-height:0;border-radius:36px;overflow:hidden;background:#000;border:2px solid #1a1a1a;display:flex;flex-direction:column;box-shadow:inset 0 0 0 1px rgba(0,0,0,.9);position:relative}
+.phone-screen .chat-app{flex:1;min-height:0;border-radius:0;border:none;box-shadow:none;display:flex;flex-direction:column}
+.phone-bottom{display:flex;align-items:center;justify-content:center;padding:6px 0 2px;flex-shrink:0}
+.phone-home{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#ffffff 0%,#ececf0 60%,#dcdce2 100%);border:1px solid #c8c8ce;box-shadow:inset 0 1px 2px rgba(255,255,255,.9),inset 0 -1px 3px rgba(0,0,0,.08),0 1px 0 rgba(0,0,0,.04)}
+
+/* TABLET FRAME */
+.tablet-frame{
+  display:flex;flex-direction:column;
+  background:linear-gradient(160deg,#3a3a3c 0%,#1c1c1e 55%,#0a0a0a 100%);
+  border-radius:24px;padding:16px 12px 12px;
+  box-shadow:0 22px 46px rgba(15,23,42,.28),0 8px 20px rgba(15,23,42,.15),inset 0 0 0 1px rgba(255,255,255,.08),inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 22px rgba(0,0,0,.55);
+  min-height:0;width:100%;position:relative;height:100%;
+}
+.tablet-camera{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#1e3a8a 0%,#0a0a0a 60%,#000 100%);box-shadow:inset 0 0 1px #000,0 0 0 1px rgba(0,0,0,.4)}
+.tablet-screen{flex:1;min-height:0;border-radius:12px;overflow:hidden;background:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);display:flex;flex-direction:column}
+
+/* CHAT */
+.chat-app{border-radius:0;overflow:hidden;border:none;background:#efeae2;display:flex;flex-direction:column;flex:1;min-height:0}
+.chat-header{background:linear-gradient(135deg,#075e54,#128c7e);color:#fff;padding:9px 11px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.chat-avatar{font-size:1.35rem;width:36px;height:36px;background:#ffffff30;border-radius:50%;display:grid;place-items:center;border:2px solid #ffffff50;flex-shrink:0}
+.chat-info{flex:1;line-height:1.2;min-width:0}
+.chat-info b{display:block;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-info small{font-size:.66rem;opacity:.9;display:flex;align-items:center;gap:4px}
+.chat-info small::before{content:"";width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 2px #4ade8040;display:inline-block}
+.chat-money{text-align:right;font-size:.6rem;line-height:1.2;opacity:.95}
+.chat-money b{display:block;font-size:.75rem;font-weight:900;color:#fef3c7}
+.chat-body{flex:1;min-height:0;padding:10px 8px 6px;background-color:#efeae2;background-image:radial-gradient(circle at 20% 30%, rgba(255,255,255,.5) 0 1.5px, transparent 2px),radial-gradient(circle at 70% 80%, rgba(255,255,255,.4) 0 1.5px, transparent 2px);background-size:22px 22px, 28px 28px;overflow-y:auto;scrollbar-width:thin}
+.chat-body::-webkit-scrollbar{width:5px}
+.chat-body::-webkit-scrollbar-thumb{background:#c0b8ac;border-radius:99px}
+.bubble{background:#fff;color:#111;border-radius:2px 14px 14px 14px;padding:7px 10px 5px;margin:0 auto 7px 0;max-width:90%;position:relative;box-shadow:0 1px 2px rgba(0,0,0,.1);font-size:.78rem;line-height:1.35;word-wrap:break-word}
+.bubble::before{content:"";position:absolute;left:-6px;top:0;width:0;height:0;border-top:8px solid #fff;border-left:8px solid transparent}
+.bubble.greeting{background:#fff;font-style:italic;color:#3d3d3d}
+.order-bubble{cursor:default;transition:background .3s ease;padding:8px 10px 6px}
+.order-bubble .order-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:2px}
+.order-bubble .order-row b{font-weight:900;color:#0d6136;font-size:.82rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.order-bubble .order-row span.qty-badge{font-size:.82rem;font-weight:1000;color:#0d6136;background:#e7f6ee;padding:1px 8px;border-radius:99px;flex-shrink:0}
+.order-bubble .bubble-meta{text-align:right;font-size:.6rem;color:#8a8580;margin-top:3px;display:flex;justify-content:flex-end;align-items:center;gap:4px}
+.order-bubble .bubble-meta .tick{color:#9ca3af;font-weight:900}
+.order-bubble.ok{background:#e7f6ee}
+.order-bubble.ok::before{border-top-color:#e7f6ee}
+.order-bubble.ok .order-row span.qty-badge{background:#c8ecd4}
+.order-bubble.ok .bubble-meta{color:#15803d}
+.order-bubble.ok .bubble-meta .tick{color:#2563eb;font-weight:900;font-size:.78rem;letter-spacing:-1px}
+.bubble.staff-bubble{margin-left:auto;margin-right:0;background:#dcf8c6;border-radius:14px 2px 14px 14px;text-align:left}
+.bubble.staff-bubble::before{left:auto;right:-6px;border-top:8px solid #dcf8c6;border-left:0;border-right:8px solid transparent}
+.staff-tag{font-size:.6rem;font-weight:900;color:#0d6136;margin-bottom:3px;display:flex;align-items:center;gap:3px;letter-spacing:.2px}
+.staff-tag .staff-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 2px #22c55e40}
+.bubble-fade{opacity:0;animation:fadeBubbleIn .5s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes fadeBubbleIn{0%{opacity:0;transform:translateY(10px) scale(.98)}60%{opacity:1}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Flash timer */
+.flash-timer-panel{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:8;background:linear-gradient(135deg,#fef3c7,#fed7aa);border:2px solid #f59e0b;border-radius:12px;padding:6px 10px;animation:flashBg 1.8s infinite;min-width:170px;box-shadow:0 6px 18px rgba(245,158,11,.3)}
+@keyframes flashBg{0%,100%{box-shadow:0 6px 18px rgba(245,158,11,.3)}50%{box-shadow:0 6px 24px rgba(245,158,11,.5)}}
+.flash-row{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;font-weight:900;color:#92400e;gap:10px}
+.flash-row b{font-size:1rem;color:#b91c1c;font-variant-numeric:tabular-nums}
+.flash-progress{height:5px;background:#ffffffaa;border-radius:99px;overflow:hidden;margin-top:4px}
+.flash-progress i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#dc2626);width:100%;transition:width 1s linear}
+.flash-timer-panel.warn{background:linear-gradient(135deg,#fee2e2,#fecaca);border-color:#dc2626;animation:flashWarn .6s infinite}
+@keyframes flashWarn{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.03)}}
+
+/* MARKETPLACE */
+.market-header{background:linear-gradient(135deg,#075e54,#128c7e);color:#fff;padding:11px 13px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.market-title{font-weight:1000;font-size:1.02rem;flex-shrink:0;letter-spacing:.3px}
+.market-search{flex:1;background:#ffffff25;border:1px solid #ffffff40;border-radius:99px;padding:7px 13px;font-size:.75rem;color:#ffffffdd;display:flex;align-items:center;gap:6px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.market-cart{position:relative;width:42px;height:42px;border-radius:50%;background:#ffffff25;border:1px solid #ffffff40;color:#fff;font-size:1.2rem;display:grid;place-items:center;transition:.2s;flex-shrink:0}
+.market-cart:disabled{cursor:not-allowed;opacity:.55}
+.market-cart.ready{background:linear-gradient(135deg,#fbbf24,#d97706);border-color:#fff;box-shadow:0 0 0 4px #fbbf2440;animation:cartGlow 1.8s infinite}
+.market-cart.ready:hover{transform:scale(1.1)}
+@keyframes cartGlow{0%,100%{box-shadow:0 0 0 4px #fbbf2440}50%{box-shadow:0 0 0 8px #fbbf2425, 0 0 22px #fbbf2480}}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;min-width:19px;height:19px;border-radius:99px;font-size:.66rem;font-weight:900;display:grid;place-items:center;padding:0 5px;border:2px solid #128c7e;line-height:1}
+.market-cart.ready .cart-badge{border-color:#d97706;background:#dc2626}
+.shop-inner{padding:13px;flex:1;min-height:0;overflow-y:auto}
+.sign{background:var(--o);color:#fff;text-align:center;font-weight:1000;border-radius:10px;padding:8px;margin-bottom:10px;font-size:.82rem}
+.category-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.category-tabs button{padding:6px 12px;border-radius:99px;background:#edf5ef;color:var(--g2);font-weight:800;font-size:.76rem;border:2px solid transparent;transition:.2s}
+.category-tabs button:hover{background:#dcefe2}
+.category-tabs button.active{background:var(--g);color:#fff;box-shadow:0 4px 10px rgba(25,134,76,.3)}
+.shop-slider-wrap{position:relative;padding:0 42px}
+.shelves{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:6px 2px 12px;scrollbar-width:thin}
+.shelves::-webkit-scrollbar{height:6px}
+.shelves::-webkit-scrollbar-thumb{background:#bcd8c5;border-radius:99px}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:#fff;color:var(--g);font-size:1.55rem;font-weight:900;box-shadow:0 4px 12px #0002;z-index:5;display:grid;place-items:center;line-height:0;padding-bottom:4px}
+.nav-btn:hover{background:var(--g);color:#fff}
+.nav-btn.prev{left:0}.nav-btn.next{right:0}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:4px}
+.dots i{width:8px;height:8px;border-radius:50%;background:#cbd8ce;transition:.25s;cursor:pointer;display:block}
+.dots i.on{background:var(--g);width:26px;border-radius:99px}
+.shelf{border-radius:11px;padding:30px 10px 10px;position:relative;min-width:0;border:3px solid;box-shadow:0 4px 10px rgba(0,0,0,.06);flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box}
+.shelf h4{position:absolute;top:0;left:0;right:0;text-align:center;margin:0;font-size:.82rem;color:#fff;padding:5px 0;border-radius:8px 8px 0 0;font-weight:900;letter-spacing:.5px}
+.shelf-buah{border-color:#c0392b;background:linear-gradient(#fff,#fdf3f2)}.shelf-buah h4{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.shelf-minuman{border-color:#2471a3;background:linear-gradient(#fff,#f0f7fc)}.shelf-minuman h4{background:linear-gradient(135deg,#3498db,#2471a3)}
+.shelf-makanan{border-color:#b9770e;background:linear-gradient(#fff,#fdf6ec)}.shelf-makanan h4{background:linear-gradient(135deg,#e67e22,#b9770e)}
+.shelf-kebutuhan{border-color:#0e7c66;background:linear-gradient(#fff,#f0faf7)}.shelf-kebutuhan h4{background:linear-gradient(135deg,#1abc9c,#0e7c66)}
+.shelf-camilan{border-color:#7d3c98;background:linear-gradient(#fff,#f8f2fc)}.shelf-camilan h4{background:linear-gradient(135deg,#9b59b6,#7d3c98)}
+.shelf-rumah{border-color:#283747;background:linear-gradient(#fff,#f2f4f7)}.shelf-rumah h4{background:linear-gradient(135deg,#34495e,#283747)}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:6px}
+.product{background:#fff;border:2px solid #edf1ee;border-radius:9px;padding:6px;text-align:center;min-width:0;transition:.15s}
+.product:hover{border-color:#bcd8c5;transform:translateY(-1px)}
+.emoji{font-size:1.75rem}
+.name{font-size:.68rem;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price{font-size:.6rem;color:#68766e}
+.product button{width:100%;background:var(--g);color:#fff;border-radius:7px;padding:5px 2px;font-size:.62rem;font-weight:900;margin-top:3px;transition:.15s}
+.product button:hover:not(:disabled){background:#0d6136}
+.product button:disabled{background:#cbd4ce;cursor:not-allowed}
+
+/* Modals */
+.modal{position:fixed;inset:0;background:#0008;z-index:30;display:flex;align-items:center;justify-content:center;padding:14px}
+.box{background:#fff;width:min(560px,100%);border-radius:21px;padding:21px;max-height:94vh;overflow:auto}
+.big{text-align:center;font-size:3rem}
+.manual{background:#f6f9f7;padding:10px;border-radius:10px;max-height:220px;overflow:auto}
+.line{display:flex;justify-content:space-between;border-bottom:1px solid #e5e9e6;padding:5px;font-size:.83rem}
+.line.discount-line{background:#fff5e1;border-top:2px dashed #f59e0b;border-bottom:2px dashed #f59e0b;margin-top:6px;font-weight:900}
+.answer{width:100%;padding:12px;border:2px solid #cbd8ce;border-radius:10px;text-align:center;font-weight:1000;font-size:1.2rem}
+.choice{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}
+.choice button{padding:8px;border-radius:8px;background:#edf5ef;color:var(--g);font-weight:900}
+.main,.sub{width:100%;border-radius:9px;font-weight:1000}
+.main{background:var(--o);color:#fff;padding:12px;box-shadow:0 4px #c97919}
+.main:disabled{background:#cbd4ce;box-shadow:none;cursor:not-allowed}
+.sub{background:#edf6ef;color:var(--g2);padding:9px;margin-top:7px}
+.tip{text-align:center;color:#bd7600;font-size:2rem;font-weight:1000}
+.notice{background:#f1f6f2;padding:8px;border-radius:9px;font-size:.76rem;margin-top:8px}
+.bad{background:#fff0f0;color:#a23737}.good{background:#e3f8e9;color:#17652d}
+
+/* Notification modal */
+.notif-box{background:#fff;width:min(380px,100%);border-radius:20px;overflow:hidden;box-shadow:0 22px 60px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.5);animation:notifPop .35s cubic-bezier(.22,1,.36,1)}
+@keyframes notifPop{0%{opacity:0;transform:translateY(-30px) scale(.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.notif-top{background:linear-gradient(135deg,#075e54,#128c7e);padding:12px 14px;color:#fff;display:flex;align-items:center;gap:10px}
+.notif-icon{width:38px;height:38px;border-radius:50%;background:#ffffff25;border:1px solid #ffffff40;display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
+.notif-title{font-size:.75rem;font-weight:900;letter-spacing:.4px;opacity:.9}
+.notif-sub{font-size:.66rem;opacity:.75;margin-top:1px}
+.notif-body{padding:16px 16px 12px;display:flex;gap:12px;align-items:flex-start}
+.notif-avatar{font-size:1.6rem;width:52px;height:52px;background:#edf5ef;border-radius:50%;display:grid;place-items:center;border:2px solid #bcd8c5;flex-shrink:0}
+.notif-content{flex:1;min-width:0}
+.notif-name{font-weight:900;font-size:.9rem;color:#0d6136;margin-bottom:4px}
+.notif-msg{font-size:.82rem;color:#4b5b53;line-height:1.4}
+.notif-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 16px}
+.notif-btn{padding:11px 10px;border-radius:11px;font-weight:900;font-size:.82rem;transition:.15s}
+.notif-btn-no{background:#f1f5f9;color:#64748b;border:1px solid #cbd5e1}
+.notif-btn-no:hover{background:#e2e8f0}
+.notif-btn-yes{background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;box-shadow:0 4px 12px rgba(34,197,94,.35)}
+.notif-btn-yes:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(34,197,94,.45)}
+
+/* Info modal */
+.info-modal-box{text-align:center}
+.info-modal-box h1{margin:4px 0 6px;color:#166534}
+.mode-desc{display:flex;align-items:center;gap:10px;background:#f8fafc;border-radius:11px;padding:10px;text-align:left;margin-top:8px;border:1px solid #e2e8f0}
+.mode-desc .ico{font-size:1.6rem}
+.mode-desc .txt{flex:1}
+.mode-desc .txt b{display:block;color:#0d6136;font-size:.85rem;margin-bottom:2px}
+.mode-desc .txt small{color:#64748b;font-size:.72rem;line-height:1.35;display:block}
+
+/* Mode picker */
+.mode-picker-box{background:#fff;width:min(520px,100%);border-radius:22px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.35);animation:notifPop .3s cubic-bezier(.22,1,.36,1)}
+.mode-picker-box h2{margin:0 0 4px;text-align:center;color:#166534;font-size:1.15rem}
+.mode-picker-box .subtitle{text-align:center;color:#64748b;font-size:.78rem;margin-bottom:14px}
+.mode-options{display:grid;grid-template-columns:1fr;gap:10px}
+.mode-card{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;transition:.18s;text-align:left;width:100%;font-family:inherit}
+.mode-card:hover{border-color:#bcd8c5;transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.08)}
+.mode-card .m-ico{font-size:1.9rem;flex-shrink:0}
+.mode-card .m-txt{flex:1;min-width:0}
+.mode-card .m-txt b{display:block;color:#0d6136;font-size:.92rem;margin-bottom:2px}
+.mode-card .m-txt small{color:#64748b;font-size:.72rem;line-height:1.35;display:block}
+.mode-card.selected{border-color:#22c55e;background:#f0fdf4;box-shadow:0 0 0 3px rgba(34,197,94,.15)}
+.mode-card.selected::after{content:"✓";color:#22c55e;font-weight:900;font-size:1.15rem;flex-shrink:0}
+.mode-card.m-flash.selected{border-color:#f59e0b;background:#fffbeb;box-shadow:0 0 0 3px rgba(245,158,11,.15)}
+.mode-card.m-flash.selected::after{color:#f59e0b}
+.mode-card.m-duel.selected{border-color:#8b5cf6;background:#f5f3ff;box-shadow:0 0 0 3px rgba(139,92,246,.15)}
+.mode-card.m-duel.selected::after{color:#8b5cf6}
+
+/* DUEL */
+.duel-modal{position:fixed;inset:0;background:radial-gradient(ellipse at center, #1e1b4b 0%, #0f0a2e 100%);z-index:40;display:flex;flex-direction:column;padding:14px;overflow:auto}
+.duel-topbar{display:flex;justify-content:space-between;align-items:center;color:#fff;margin-bottom:10px;flex-shrink:0}
+.duel-title{font-weight:1000;font-size:1.15rem;letter-spacing:1px;display:flex;align-items:center;gap:8px;color:#fde68a}
+.duel-round-pill{background:#8b5cf6;color:#fff;padding:5px 12px;border-radius:99px;font-weight:900;font-size:.78rem}
+.duel-close{width:36px;height:36px;border-radius:50%;background:#ffffff20;color:#fff;font-size:1.1rem;border:1px solid #ffffff30}
+.duel-close:hover{background:#ef4444;border-color:#ef4444}
+.duel-arena{display:grid;grid-template-columns:1fr minmax(280px,340px) 1fr;gap:14px;align-items:start;width:100%;max-width:1300px;margin:auto}
+.duel-side{display:flex;flex-direction:column;gap:10px}
+.duel-player-header{padding:10px 12px;border-radius:12px;color:#fff;display:flex;justify-content:space-between;align-items:center;font-weight:900}
+.duel-side.p1 .duel-player-header{background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 4px 14px rgba(59,130,246,.4)}
+.duel-side.p2 .duel-player-header{background:linear-gradient(135deg,#f97316,#c2410c);box-shadow:0 4px 14px rgba(249,115,22,.4)}
+.duel-name{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}
+.duel-score-big{background:#ffffff30;padding:3px 10px;border-radius:99px;font-size:.85rem}
+.duel-edit-name{cursor:pointer;text-decoration:underline dotted #ffffff80;text-underline-offset:3px}
+.duel-question-box{background:#ffffff15;border:1px solid #ffffff25;color:#e0e7ff;border-radius:10px;padding:8px 10px;text-align:center;font-size:.8rem;font-weight:800;letter-spacing:.3px}
+.duel-question-box b{color:#fde68a;font-size:1rem;display:block;margin-top:2px}
+.duel-options{display:grid;grid-template-columns:1fr;gap:8px}
+.duel-opt{padding:12px 10px;border-radius:11px;background:#ffffff;color:#1e1b4b;font-weight:1000;font-size:.92rem;border:2px solid transparent;transition:.15s;text-align:center;font-family:'Courier New',monospace;letter-spacing:.5px}
+.duel-opt:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,255,255,.15)}
+.duel-opt:active:not(:disabled){transform:scale(.97)}
+.duel-opt:disabled{cursor:not-allowed}
+.duel-side.p1 .duel-opt{border-color:#3b82f680}
+.duel-side.p2 .duel-opt{border-color:#f9731680}
+.duel-opt.correct{background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;border-color:#4ade80;animation:correctPop .35s}
+.duel-opt.wrong{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;border-color:#f87171}
+.duel-opt.dim{opacity:.35;background:#94a3b8}
+@keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.duel-status{text-align:center;font-size:.72rem;font-weight:800;padding:6px;border-radius:8px;background:#ffffff15;color:#c7d2fe;min-height:28px;display:grid;place-items:center}
+.duel-status.ok{background:#15803d30;color:#86efac;border:1px solid #22c55e40}
+.duel-status.wait{background:#7c3aed30;color:#ddd6fe;border:1px solid #8b5cf640}
+
+.receipt-wrap{filter:drop-shadow(0 12px 28px rgba(0,0,0,.5));width:100%}
+.receipt-paper{background:#fffef8;padding:22px 16px;position:relative;font-family:'Courier New',ui-monospace,monospace;color:#1c1917;border-radius:2px}
+.receipt-paper::before,.receipt-paper::after{content:"";position:absolute;left:0;right:0;height:12px;background-image:radial-gradient(circle at 10px 10px, #fffef8 9.5px, transparent 10px);background-size:20px 12px;background-repeat:repeat-x;background-position:-10px 0}
+.receipt-paper::before{top:-12px}
+.receipt-paper::after{bottom:-12px;background-image:radial-gradient(circle at 10px 2px, #fffef8 9.5px, transparent 10px)}
+.receipt-head{text-align:center;line-height:1.4}
+.receipt-head .brand{font-size:.95rem;font-weight:1000;letter-spacing:1px}
+.receipt-head .sub{font-size:.68rem;color:#57534e}
+.receipt-div{text-align:center;color:#78716c;font-size:.72rem;letter-spacing:-.5px;overflow:hidden;white-space:nowrap;margin:3px 0}
+.receipt-meta{font-size:.68rem;color:#57534e;line-height:1.5}
+.receipt-meta-row{display:flex;justify-content:space-between}
+.receipt-items{margin:6px 0}
+.receipt-item{font-size:.72rem;line-height:1.5}
+.receipt-item-row{display:flex;justify-content:space-between;gap:6px}
+.receipt-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.receipt-item-sub{font-size:.6rem;color:#78716c;padding-left:14px}
+.receipt-total-block{margin-top:4px}
+.receipt-line{display:flex;justify-content:space-between;font-size:.78rem;padding:2px 0;font-weight:800}
+.receipt-line.big{font-size:.88rem;background:#fef3c7;padding:5px 6px;border-radius:4px;margin:3px 0}
+.receipt-line.answer-target{background:#fde68a;border:2px dashed #b45309;padding:6px;margin:5px 0;border-radius:5px}
+.receipt-line .qmark{color:#b91c1c;font-weight:1000;letter-spacing:2px}
+.receipt-line .val{color:#1c1917}
+.receipt-barcode{height:32px;background:repeating-linear-gradient(90deg,#1c1917 0 2px,transparent 2px 3px,#1c1917 3px 4px,transparent 4px 6px);margin:8px auto 3px;max-width:200px;opacity:.85}
+.receipt-thanks{font-size:.68rem;letter-spacing:2px;color:#57534e;text-align:center}
+.receipt-foot{text-align:center;font-size:.68rem;color:#78716c;line-height:1.5;margin-top:4px}
+
+.duel-setup-overlay{position:fixed;inset:0;background:radial-gradient(ellipse at center, rgba(30,27,75,.96), rgba(15,10,46,.98));z-index:50;display:flex;align-items:center;justify-content:center;padding:20px}
+.duel-setup-box{background:#fff;border-radius:20px;padding:24px 20px;width:min(460px,100%);text-align:center;box-shadow:0 22px 60px rgba(0,0,0,.5);border:4px solid #a78bfa}
+.duel-setup-box .icon{font-size:52px;margin-bottom:4px}
+.duel-setup-box h2{margin:4px 0 6px;color:#5b21b6}
+.duel-setup-box p{margin:0 0 16px;color:#64748b;font-size:.85rem}
+.duel-input{width:100%;padding:12px 14px;border:2px solid #cbd5e1;border-radius:11px;font-size:15px;outline:none;margin-bottom:9px;text-align:center;font-weight:700}
+.duel-input.p1:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.duel-input.p2:focus{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.12)}
+.duel-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.duel-btns .main,.duel-btns .sub{margin:0}
+.duel-btns .sub{background:#f1f5f9;color:#334155;border:1px solid #cbd5e1}
+.duel-result-box{background:#fff;border-radius:20px;padding:24px 20px;width:min(480px,100%);text-align:center;box-shadow:0 22px 60px rgba(0,0,0,.35);border:4px solid #fbbf24}
+.duel-result-box .trophy{font-size:3.4rem;line-height:1}
+.duel-result-box h2{margin:8px 0 4px;color:#b45309}
+.duel-result-scores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.duel-result-side{padding:12px 8px;border-radius:12px;color:#fff}
+.duel-result-side.p1{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+.duel-result-side.p2{background:linear-gradient(135deg,#f97316,#c2410c)}
+.duel-result-side .nm{font-size:.8rem;font-weight:800;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.duel-result-side .sc{font-size:1.6rem;font-weight:1000}
+.duel-result-side .tag{font-size:.68rem;opacity:.9;margin-top:2px}
+
+/* ============ LANDSCAPE WARNING ============ */
+.landscape-warn{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#0d6136 0%,#19864c 100%);
+  align-items:center;justify-content:center;flex-direction:column;
+  color:#fff;padding:24px;text-align:center;
+}
+.landscape-warn.dismiss{animation:lwFadeOut .35s ease forwards}
+@keyframes lwFadeOut{to{opacity:0;visibility:hidden}}
+.landscape-warn .lw-icon{font-size:84px;margin-bottom:14px;display:inline-block;animation:rotateHint 2.4s infinite}
+@keyframes rotateHint{
+  0%,25%{transform:rotate(0deg)}
+  45%,90%{transform:rotate(90deg)}
+  100%{transform:rotate(90deg)}
+}
+.landscape-warn h2{margin:0 0 8px;font-size:1.25rem;letter-spacing:.3px}
+.landscape-warn p{margin:0;font-size:.85rem;line-height:1.5;max-width:320px;opacity:.92}
+.landscape-warn .badge{margin-top:16px;background:#ffffff20;border:1px solid #ffffff40;padding:7px 16px;border-radius:99px;font-size:.72rem;font-weight:800;letter-spacing:.5px}
+.lw-countdown{margin-top:22px;width:100%;max-width:280px;display:flex;flex-direction:column;align-items:center;gap:9px}
+.lw-count-num{
+  width:64px;height:64px;border-radius:50%;
+  background:#ffffff20;border:3px solid #ffffff55;
+  display:grid;place-items:center;
+  font-size:2rem;font-weight:1000;
+  color:#fff;line-height:1;
+  box-shadow:0 0 0 6px #ffffff10;
+  animation:countPulse 1s infinite;
+  font-variant-numeric:tabular-nums;
+}
+@keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.lw-progress{
+  width:100%;height:8px;background:#ffffff25;
+  border-radius:99px;overflow:hidden;
+  border:1px solid #ffffff40;
+}
+.lw-progress i{
+  display:block;height:100%;width:100%;
+  background:linear-gradient(90deg,#fbbf24,#f59e0b);
+  border-radius:99px;
+  transform-origin:left center;
+}
+.lw-progress i.run{animation:lwProgress 5s linear forwards}
+@keyframes lwProgress{from{width:100%}to{width:0%}}
+.lw-count-txt{font-size:.74rem;opacity:.9;letter-spacing:.2px}
+.lw-count-txt b{font-weight:900;color:#fef3c7}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1000px) and (min-width:641px){
+  .layout{grid-template-columns:1fr;gap:16px}
+  .phone-frame{max-width:300px;aspect-ratio:9/16}
+  .tablet-frame{aspect-ratio:4/3;height:auto}
+}
+
+/* Portrait mobile: hide layout, show warning (until dismissed) */
+@media(max-width:900px) and (orientation:portrait){
+  html:not(.force-landscape) body:not(.portrait-dismissed) main,
+  html:not(.force-landscape) body:not(.portrait-dismissed) .top,
+  html:not(.force-landscape) body:not(.portrait-dismissed) .layout{display:none !important}
+  html:not(.force-landscape) body:not(.portrait-dismissed) .landscape-warn{display:flex !important}
+
+  /* Portrait fallback (setelah overlay tutup) */
+  html:not(.force-landscape) body.portrait-dismissed .layout{grid-template-columns:1fr;gap:14px}
+  html:not(.force-landscape) body.portrait-dismissed .phone-frame{max-width:280px;aspect-ratio:9/16;margin:0 auto}
+  html:not(.force-landscape) body.portrait-dismissed .tablet-frame{aspect-ratio:4/3;height:auto;margin:0 auto}
+}
+
+/* Landscape mobile */
+@media(max-width:900px) and (orientation:landscape){
+  main{padding:6px;max-width:100%}
+  .layout{grid-template-columns:30fr 70fr;gap:8px}
+
+  .top{padding:5px 10px}
+  .logo{font-size:1rem}
+  .pill{font-size:.62rem;padding:3px 7px}
+  .icon-btn{width:28px;height:28px;font-size:.9rem}
+
+  .phone-frame{aspect-ratio:9/16;height:calc(100vh - 70px);width:auto;max-width:100%;max-height:100%;margin:0 auto;border-radius:32px;padding:6px}
+  .phone-top{padding:2px 2px 4px;gap:6px}
+  .phone-camera{width:6px;height:6px}
+  .phone-speaker{width:38px;height:4px}
+  .phone-screen{border-radius:26px}
+  .phone-bottom{padding:4px 0 1px}
+  .phone-home{width:26px;height:26px}
+
+  .tablet-frame{height:100%;padding:12px 8px 8px;border-radius:18px}
+  .tablet-screen{border-radius:10px}
+
+  .chat-header{padding:6px 8px;gap:6px}
+  .chat-avatar{width:28px;height:28px;font-size:1.05rem}
+  .chat-info b{font-size:.72rem}
+  .chat-info small{font-size:.58rem}
+  .chat-money{font-size:.54rem}
+  .chat-money b{font-size:.68rem}
+  .chat-body{padding:6px 5px 4px}
+  .bubble{font-size:.68rem;padding:5px 8px 4px;margin-bottom:5px}
+  .order-bubble .order-row b{font-size:.72rem}
+  .order-bubble .order-row span.qty-badge{font-size:.72rem;padding:1px 6px}
+  .bubble-meta{font-size:.54rem}
+
+  .market-header{padding:7px 9px;gap:6px}
+  .market-title{font-size:.85rem}
+  .market-search{padding:5px 10px;font-size:.65rem}
+  .market-cart{width:34px;height:34px;font-size:1rem}
+  .shop-inner{padding:8px}
+  .sign{padding:6px;font-size:.72rem;margin-bottom:7px}
+  .category-tabs{gap:4px;margin-bottom:7px}
+  .category-tabs button{padding:4px 8px;font-size:.65rem}
+  .shop-slider-wrap{padding:0 32px}
+  .nav-btn{width:28px;height:28px;font-size:1.15rem}
+  .shelf{padding:24px 8px 8px;border-width:2px}
+  .shelf h4{font-size:.68rem;padding:3px 0}
+  .products{grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:4px}
+  .product{padding:4px;border-width:1.5px}
+  .emoji{font-size:1.25rem}
+  .name{font-size:.58rem}
+  .price{font-size:.52rem}
+  .product button{padding:3px 2px;font-size:.54rem;margin-top:2px}
+  .dots i{width:6px;height:6px}
+  .dots i.on{width:20px}
+
+  .flash-timer-panel{bottom:8px;padding:4px 8px;min-width:130px}
+  .flash-row{font-size:.62rem;gap:6px}
+  .flash-row b{font-size:.85rem}
+
+  .mode-picker-box{padding:16px;width:min(560px,100%)}
+  .mode-picker-box h2{font-size:1rem}
+  .mode-options{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .mode-card{padding:10px;flex-direction:column;text-align:center;gap:6px;position:relative}
+  .mode-card .m-ico{font-size:1.6rem}
+  .mode-card .m-txt b{font-size:.78rem;text-align:center}
+  .mode-card .m-txt small{font-size:.62rem;text-align:center;line-height:1.3}
+  .mode-card.selected::after{position:absolute;top:4px;right:6px;font-size:.85rem}
+
+  .notif-box{width:min(340px,90vw)}
+  .notif-body{padding:12px 14px 10px}
+  .notif-avatar{width:44px;height:44px;font-size:1.35rem}
+  .notif-actions{padding:0 14px 12px}
+  .notif-btn{padding:9px 8px;font-size:.75rem}
+
+  .duel-arena{grid-template-columns:1fr minmax(200px,240px) 1fr;gap:8px}
+  .duel-opt{padding:9px 6px;font-size:.8rem}
+  .duel-player-header{padding:7px 9px;font-size:.82rem}
+  .receipt-paper{padding:14px 10px;font-size:.68rem}
+
+  /* Warning tidak diperlukan di landscape */
+  .landscape-warn{display:none !important}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:420px){
+  .phone-frame{height:calc(100vh - 55px)}
+  .chat-header{padding:5px 7px}
+  .chat-avatar{width:24px;height:24px;font-size:.92rem}
+  .chat-info b{font-size:.66rem}
+  .chat-info small{font-size:.54rem}
+  .chat-money b{font-size:.62rem}
+  .bubble{font-size:.62rem}
+  .order-bubble .order-row b{font-size:.66rem}
+  .sign{padding:5px;font-size:.66rem}
+  .category-tabs button{padding:3px 7px;font-size:.6rem}
+  .products{grid-template-columns:repeat(auto-fill,minmax(62px,1fr))}
+  .emoji{font-size:1.1rem}
+  .name{font-size:.54rem}
+}
+
+/* ============ AUTO-LANDSCAPE (rotasi paksa saat HP portrait) ============ */
+html.force-landscape{overflow:hidden;height:100%}
+html.force-landscape body{
+  position:fixed;top:0;left:0;margin:0;
+  width:var(--fw);height:var(--fh);
+  transform-origin:top left;transform:rotate(90deg) translateY(-100%);
+  overflow:auto;-webkit-overflow-scrolling:touch;
+}
+html.force-landscape .box{max-height:calc(var(--fh)*.94)}
+html.force-landscape main{padding:6px;max-width:100%}
+html.force-landscape .layout{grid-template-columns:30fr 70fr;gap:8px}
+html.force-landscape .top{padding:5px 10px}
+html.force-landscape .logo{font-size:1rem}
+html.force-landscape .pill{font-size:.62rem;padding:3px 7px}
+html.force-landscape .icon-btn{width:28px;height:28px;font-size:.9rem}
+html.force-landscape .phone-frame{aspect-ratio:9/16;height:calc(var(--fh) - 70px);width:auto;max-width:100%;max-height:100%;margin:0 auto;border-radius:32px;padding:6px}
+html.force-landscape .phone-top{padding:2px 2px 4px;gap:6px}
+html.force-landscape .phone-camera{width:6px;height:6px}
+html.force-landscape .phone-speaker{width:38px;height:4px}
+html.force-landscape .phone-screen{border-radius:26px}
+html.force-landscape .phone-bottom{padding:4px 0 1px}
+html.force-landscape .phone-home{width:26px;height:26px}
+html.force-landscape .tablet-frame{height:100%;padding:12px 8px 8px;border-radius:18px}
+html.force-landscape .tablet-screen{border-radius:10px}
+html.force-landscape .chat-header{padding:6px 8px;gap:6px}
+html.force-landscape .chat-avatar{width:28px;height:28px;font-size:1.05rem}
+html.force-landscape .chat-info b{font-size:.72rem}
+html.force-landscape .chat-info small{font-size:.58rem}
+html.force-landscape .chat-money{font-size:.54rem}
+html.force-landscape .chat-money b{font-size:.68rem}
+html.force-landscape .chat-body{padding:6px 5px 4px}
+html.force-landscape .bubble{font-size:.68rem;padding:5px 8px 4px;margin-bottom:5px}
+html.force-landscape .order-bubble .order-row b{font-size:.72rem}
+html.force-landscape .order-bubble .order-row span.qty-badge{font-size:.72rem;padding:1px 6px}
+html.force-landscape .bubble-meta{font-size:.54rem}
+html.force-landscape .market-header{padding:7px 9px;gap:6px}
+html.force-landscape .market-title{font-size:.85rem}
+html.force-landscape .market-search{padding:5px 10px;font-size:.65rem}
+html.force-landscape .market-cart{width:34px;height:34px;font-size:1rem}
+html.force-landscape .shop-inner{padding:8px}
+html.force-landscape .sign{padding:6px;font-size:.72rem;margin-bottom:7px}
+html.force-landscape .category-tabs{gap:4px;margin-bottom:7px}
+html.force-landscape .category-tabs button{padding:4px 8px;font-size:.65rem}
+html.force-landscape .shop-slider-wrap{padding:0 32px}
+html.force-landscape .nav-btn{width:28px;height:28px;font-size:1.15rem}
+html.force-landscape .shelf{padding:24px 8px 8px;border-width:2px}
+html.force-landscape .shelf h4{font-size:.68rem;padding:3px 0}
+html.force-landscape .products{grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:4px}
+html.force-landscape .product{padding:4px;border-width:1.5px}
+html.force-landscape .emoji{font-size:1.25rem}
+html.force-landscape .name{font-size:.58rem}
+html.force-landscape .price{font-size:.52rem}
+html.force-landscape .product button{padding:3px 2px;font-size:.54rem;margin-top:2px}
+html.force-landscape .dots i{width:6px;height:6px}
+html.force-landscape .dots i.on{width:20px}
+html.force-landscape .flash-timer-panel{bottom:8px;padding:4px 8px;min-width:130px}
+html.force-landscape .flash-row{font-size:.62rem;gap:6px}
+html.force-landscape .flash-row b{font-size:.85rem}
+html.force-landscape .mode-picker-box{padding:16px;width:min(560px,100%)}
+html.force-landscape .mode-picker-box h2{font-size:1rem}
+html.force-landscape .mode-options{grid-template-columns:1fr 1fr 1fr;gap:8px}
+html.force-landscape .mode-card{padding:10px;flex-direction:column;text-align:center;gap:6px;position:relative}
+html.force-landscape .mode-card .m-ico{font-size:1.6rem}
+html.force-landscape .mode-card .m-txt b{font-size:.78rem;text-align:center}
+html.force-landscape .mode-card .m-txt small{font-size:.62rem;text-align:center;line-height:1.3}
+html.force-landscape .mode-card.selected::after{position:absolute;top:4px;right:6px;font-size:.85rem}
+html.force-landscape .notif-box{width:min(340px,90vw)}
+html.force-landscape .notif-body{padding:12px 14px 10px}
+html.force-landscape .notif-avatar{width:44px;height:44px;font-size:1.35rem}
+html.force-landscape .notif-actions{padding:0 14px 12px}
+html.force-landscape .notif-btn{padding:9px 8px;font-size:.75rem}
+html.force-landscape .duel-arena{grid-template-columns:1fr minmax(200px,240px) 1fr;gap:8px}
+html.force-landscape .duel-opt{padding:9px 6px;font-size:.8rem}
+html.force-landscape .duel-player-header{padding:7px 9px;font-size:.82rem}
+html.force-landscape .receipt-paper{padding:14px 10px;font-size:.68rem}
+html.force-landscape /* Warning tidak diperlukan di landscape */
+  .landscape-warn{display:none !important}
+html.force-landscape.force-short .phone-frame{height:calc(var(--fh) - 55px)}
+html.force-landscape.force-short .chat-header{padding:5px 7px}
+html.force-landscape.force-short .chat-avatar{width:24px;height:24px;font-size:.92rem}
+html.force-landscape.force-short .chat-info b{font-size:.66rem}
+html.force-landscape.force-short .chat-info small{font-size:.54rem}
+html.force-landscape.force-short .chat-money b{font-size:.62rem}
+html.force-landscape.force-short .bubble{font-size:.62rem}
+html.force-landscape.force-short .order-bubble .order-row b{font-size:.66rem}
+html.force-landscape.force-short .sign{padding:5px;font-size:.66rem}
+html.force-landscape.force-short .category-tabs button{padding:3px 7px;font-size:.6rem}
+html.force-landscape.force-short .products{grid-template-columns:repeat(auto-fill,minmax(62px,1fr))}
+html.force-landscape.force-short .emoji{font-size:1.1rem}
+html.force-landscape.force-short .name{font-size:.54rem}
+
+/* COVER */
+.cover{position:fixed;inset:0;z-index:85;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(135deg,#0d6136,#19864c);overflow:hidden;transition:opacity .45s,transform .45s}
+.cover.out{opacity:0;transform:scale(1.05);pointer-events:none}
+.cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.cover-shade{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(transparent,#0d613699)}
+.btn-main3d{position:relative;z-index:2;margin-bottom:max(5vh,22px);padding:14px 56px;font-size:clamp(1.3rem,4.5vw,2rem);font-weight:1000;letter-spacing:3px;color:#fff;background:linear-gradient(180deg,#ffb347,#ff8a00);border-radius:18px;border:3px solid #fff3;text-shadow:0 2px 0 #b45309;box-shadow:0 8px 0 #b45309,0 12px 0 #7c3a06,0 18px 28px #0007,inset 0 3px 0 #fff6;transition:transform .08s,box-shadow .08s;animation:coverShake 2.2s ease-in-out infinite}
+.btn-main3d:hover{filter:brightness(1.08)}
+.btn-main3d:active{animation:none;transform:translateY(8px);box-shadow:0 0 0 #b45309,0 4px 0 #7c3a06,0 6px 12px #0007,inset 0 3px 0 #fff6}
+@keyframes coverShake{0%,60%,100%{transform:translate(0,0) rotate(0)}66%{transform:translate(-2px,0) rotate(-1deg)}72%{transform:translate(2px,0) rotate(1deg)}78%{transform:translate(-2px,0) rotate(-.8deg)}84%{transform:translate(2px,0) rotate(.8deg)}90%{transform:translate(-1px,0) rotate(-.4deg)}}
+@media (prefers-reduced-motion:reduce){.btn-main3d{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="logo">🛒 TOKO <b>TIKA</b></div>
+  <div class="stats">
+    <div class="pill">⭐ <span id="score">0</span></div>
+    <div class="pill">💰 Rp<span id="wallet">0</span></div>
+    <button class="pill pill-btn" id="gradeBtn" title="Info Kelas">🎯 Kelas <span id="grade">1</span></button>
+    <div class="pill">❤️ <span id="lives">3</span></div>
+    <button class="icon-btn" id="modeBtn" title="Pilih Mode">🎮</button>
+    <button class="icon-btn" id="new" title="Pesanan Baru">✉️<span class="icon-badge">1</span></button>
+    <button class="icon-btn" id="help" title="Petunjuk">💡</button>
+  </div>
+</header>
+
+<main>
+<div class="layout">
+
+  <aside class="panel">
+    <div class="phone-frame">
+      <div class="phone-top">
+        <span class="phone-camera"></span>
+        <span class="phone-speaker"></span>
+      </div>
+      <div class="phone-screen">
+        <div class="chat-app">
+          <div class="chat-header">
+            <div class="chat-avatar" id="customerAvatar">👨</div>
+            <div class="chat-info">
+              <b id="customerName">Pelanggan Toko Tika</b>
+              <small>online</small>
+            </div>
+            <div class="chat-money">💰 Uang<b>Rp<span id="money-chat">0</span></b></div>
+          </div>
+          <div class="chat-body" id="orders"></div>
+        </div>
+        <div class="flash-timer-panel hidden" id="flashTimer">
+          <div class="flash-row"><span>⚡ FLASH SALE</span><b><span id="flashTime">60</span>s</b></div>
+          <div class="flash-progress"><i id="flashBar"></i></div>
+        </div>
+      </div>
+      <div class="phone-bottom">
+        <span class="phone-home"></span>
+      </div>
+    </div>
+  </aside>
+
+  <section class="shop">
+    <div class="tablet-frame">
+      <span class="tablet-camera"></span>
+      <div class="tablet-screen">
+        <div class="market-header">
+          <div class="market-title">🏪 TOKO TIKA</div>
+          <div class="market-search">🔍 Cari barang sesuai pesanan...</div>
+          <button class="market-cart" id="cartBtn" disabled title="Keranjang">🛒<span class="cart-badge" id="cartBadge">0</span></button>
+        </div>
+        <div class="shop-inner">
+          <div class="sign">🏪 PILIH BARANG SESUAI PESANAN</div>
+          <div class="category-tabs" id="categoryTabs"></div>
+          <div class="shop-slider-wrap">
+            <button class="nav-btn prev" onclick="slideBy(-1)" aria-label="Sebelumnya">‹</button>
+            <div class="shelves" id="shelves">
+              <div class="shelf shelf-buah"><h4>🍎 BUAH</h4><div class="products" id="Buah"></div></div>
+              <div class="shelf shelf-minuman"><h4>🥛 MINUMAN</h4><div class="products" id="Minuman"></div></div>
+              <div class="shelf shelf-makanan"><h4>🍞 MAKANAN</h4><div class="products" id="Makanan"></div></div>
+              <div class="shelf shelf-kebutuhan"><h4>🧼 KEBUTUHAN</h4><div class="products" id="Kebutuhan"></div></div>
+              <div class="shelf shelf-camilan"><h4>🍿 CAMILAN</h4><div class="products" id="Camilan"></div></div>
+              <div class="shelf shelf-rumah"><h4>🏠 RUMAH</h4><div class="products" id="Rumah"></div></div>
+            </div>
+            <button class="nav-btn next" onclick="slideBy(1)" aria-label="Berikutnya">›</button>
+          </div>
+          <div class="dots" id="shelfDots"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<!-- LANDSCAPE WARNING OVERLAY -->
+<div class="landscape-warn" id="landscapeWarn">
+  <span class="lw-icon">📱</span>
+  <h2>Putar HP ke Landscape</h2>
+  <p>Game ini lebih nyaman dimainkan dalam posisi <b>landscape</b> (mendatar) agar smartphone &amp; tablet terlihat jelas.</p>
+  <div class="badge">↻ PUTAR HP ANDA</div>
+
+  <div class="lw-countdown">
+    <div class="lw-count-num" id="lwCountNum">5</div>
+    <div class="lw-progress"><i id="lwProgressBar" class="run"></i></div>
+    <div class="lw-count-txt">Menutup otomatis dalam <b id="lwCountSec">5</b> detik…</div>
+  </div>
+</div>
+
+<!-- MODE PICKER MODAL -->
+<div class="modal hidden" id="modeModal">
+  <div class="mode-picker-box">
+    <h2>🎮 Pilih Mode Bermain</h2>
+    <div class="subtitle">Pilih mode favoritmu untuk sesi berikutnya</div>
+    <div class="mode-options">
+      <button class="mode-card m-normal selected" data-mode="normal">
+        <div class="m-ico">🎮</div>
+        <div class="m-txt"><b>Mode Normal</b><small>Santai tanpa batas waktu. Fokus pada ketelitian berhitung.</small></div>
+      </button>
+      <button class="mode-card m-flash" data-mode="flash">
+        <div class="m-ico">⚡</div>
+        <div class="m-txt"><b>Mode Flash Sale</b><small>Ada batas waktu per pesanan. Bonus skor untuk sisa waktu!</small></div>
+      </button>
+      <button class="mode-card m-duel" data-mode="duel">
+        <div class="m-ico">⚔️</div>
+        <div class="m-txt"><b>Mode Duel</b><small>2 pemain, 10 ronde struk. Adu cepat pilih jawaban benar!</small></div>
+      </button>
+    </div>
+    <button class="sub" onclick="closeM('modeModal')" style="margin-top:14px">❌ TUTUP</button>
+  </div>
+</div>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <img class="cover-img" src="https://i.ibb.co.com/b51KXf3L/Toko-Tika-Math-Adventure.png" alt="Toko Tika Math Adventure">
+  <div class="cover-shade"></div>
+  <button class="btn-main3d" id="coverPlay">▶ MAIN</button>
+</div>
+
+<!-- NAMA AGEN -->
+<div class="modal" id="agentModal" style="z-index:80"><div class="box" style="text-align:center">
+  <div style="font-size:2.4rem">🏪</div>
+  <h2>Selamat Datang di Toko Tika!</h2>
+  <p>Kamu bekerja sebagai <b>Agen Toko Tika</b>: membantu memesankan, menyiapkan, dan menghitung belanjaan pelanggan.</p>
+  <input class="answer" id="agentNameInput" maxlength="20" placeholder="Tulis namamu sebagai agen" autocomplete="off">
+  <button class="main" id="agentStart" style="margin-top:8px">🚀 MULAI BEKERJA</button>
+</div></div>
+
+<!-- NOTIFIKASI -->
+<div class="modal hidden" id="notifModal" style="z-index:60">
+  <div class="notif-box">
+    <div class="notif-top">
+      <div class="notif-icon">📱</div>
+      <div>
+        <div class="notif-title">TOKO TIKA</div>
+        <div class="notif-sub">Pesan baru dari pelanggan</div>
+      </div>
+    </div>
+    <div class="notif-body">
+      <div class="notif-avatar" id="notifAvatar">👨</div>
+      <div class="notif-content">
+        <div class="notif-name" id="notifName">Pelanggan</div>
+        <div class="notif-msg" id="notifMsg">Halo Kak! Saya mau pesan ini ya 😊</div>
+      </div>
+    </div>
+    <div class="notif-actions">
+      <button class="notif-btn notif-btn-no" onclick="dismissNotif()">Tidak</button>
+      <button class="notif-btn notif-btn-yes" onclick="openNotifChat()">Buka Pesan</button>
+    </div>
+  </div>
+</div>
+
+<!-- CASH MODAL -->
+<div class="modal hidden" id="cash"><div class="box">
+  <h2>🧾 KASIR — HITUNG MANUAL</h2>
+  <p><b>Total belanja tidak diberikan.</b> Jumlahkan semua harga satu per satu.</p>
+  <div class="manual" id="manual"></div>
+  <div class="notice" id="cashHint">1️⃣ Masukkan total hasil hitunganmu. 2️⃣ Setelah benar, hitung kembalian sendiri.</div>
+  <p><b id="totalLabel">Total belanja:</b></p>
+  <input class="answer" id="ta" inputmode="numeric" placeholder="Masukkan hasil penjumlahan">
+  <div class="choice"><button data-t="1000">+1.000</button><button data-t="10000">+10.000</button><button id="ct">C</button></div>
+  <button class="main" id="check" style="margin-top:8px">🧮 PERIKSA TOTAL</button>
+  <div id="change" class="hidden"><hr><p><b>Uang pelanggan: Rp<span id="money">0</span></b></p><p>Hitung sendiri: uang pelanggan − total belanja.</p><input class="answer" id="ca" inputmode="numeric" placeholder="Masukkan kembalian"><div class="choice"><button data-c="1000">+1.000</button><button data-c="10000">+10.000</button><button id="cc">C</button></div><button class="main" id="finish" style="margin-top:8px">💰 BAYAR & SERAHKAN</button></div>
+  <div class="notice" id="cashMsg">Kerjakan dengan teliti.</div>
+</div></div>
+
+<div class="modal hidden" id="result"><div class="box" style="text-align:center"><div style="font-size:1.8rem">⭐⭐⭐⭐⭐</div><div class="big">🎉</div><h1>Pesanan Diserahkan!</h1><p id="rt"></p><div class="tip">💰 Tip Rp<span id="tip">0</span></div><p>⭐ Skor +<b id="earned">0</b></p><div class="notice" id="progressNote"></div><button class="main" id="next">🎯 LANJUT</button></div></div>
+
+<div class="modal hidden" id="helpModal"><div class="box"><h2>💡 Cara Bermain</h2><ol><li>Baca <b>chat pesanan</b> dari pelanggan.</li><li>Ambil barang dan jumlah yang tepat.</li><li>Saat pesanan lengkap, ikon <b>🛒 keranjang</b> menyala.</li><li>Jumlahkan semua harga secara manual di kasir.</li></ol><div class="notice good" style="margin-top:10px"><b>🎮 Mode Normal:</b> santai tanpa batas waktu.</div><div class="notice" style="background:linear-gradient(135deg,#fef3c7,#fed7aa);color:#92400e"><b>⚡ Mode Flash Sale:</b> ada batas waktu per pesanan!</div><div class="notice" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);color:#5b21b6"><b>⚔️ Mode Duel:</b> 2 pemain adu cepat — <b>10 ronde struk</b>.</div><button class="main" onclick="closeM('helpModal')">👍 SIAP</button></div></div>
+
+<div class="modal hidden" id="infoModal"><div class="box info-modal-box">
+  <div class="big">🎯</div>
+  <h1>Kelas <span id="infoGrade">1</span></h1>
+  <p><b>Tantangan <span id="infoChallenge">1/10</span></b></p>
+  <div class="notice good" id="infoMaterial">Mengenal harga & penjumlahan sederhana</div>
+  <div class="notice" id="infoDiscount" style="display:none;background:linear-gradient(135deg,#fee2e2,#fecaca);color:#b91c1c"><b>🎁 Diskon <span id="infoDiscountVal">20</span>%</b> aktif di kasir</div>
+  <div style="text-align:left;margin-top:14px;font-weight:900;color:#0d6136;font-size:.85rem">Mode Saat Ini:</div>
+  <div class="mode-desc" id="infoModeDesc"></div>
+  <button class="main" onclick="closeM('infoModal')" style="margin-top:14px">👍 MENGERTI</button>
+</div></div>
+
+<div class="duel-setup-overlay hidden" id="duelSetup">
+  <div class="duel-setup-box">
+    <div class="icon">⚔️</div>
+    <h2>DUEL MODE</h2>
+    <p>2 pemain adu cepat memilih jawaban benar — <b>10 ronde struk!</b></p>
+    <input class="duel-input p1" id="duelP1Name" type="text" maxlength="16" placeholder="🔵 Nama Pemain 1" autocomplete="off">
+    <input class="duel-input p2" id="duelP2Name" type="text" maxlength="16" placeholder="🟠 Nama Pemain 2" autocomplete="off">
+    <div class="duel-btns">
+      <button class="sub" id="duelCancel">❌ BATAL</button>
+      <button class="main" id="duelStart" style="background:#8b5cf6;box-shadow:0 4px #5b21b6">🎮 MULAI DUEL</button>
+    </div>
+    <div class="player-error" id="duelError" style="min-height:20px;color:#dc2626;font-size:13px;margin-top:6px"></div>
+  </div>
+</div>
+
+<div class="duel-modal hidden" id="duelArena">
+  <div class="duel-topbar">
+    <div class="duel-title">⚔️ DUEL MODE</div>
+    <div class="duel-round-pill" id="duelRoundPill">Ronde 1 / 10</div>
+    <button class="duel-close" id="duelClose">✕</button>
+  </div>
+  <div class="duel-arena">
+    <div class="duel-side p1">
+      <div class="duel-player-header">
+        <span class="duel-name duel-edit-name" id="duelP1Header" title="Klik untuk ganti nama">Player 1</span>
+        <span class="duel-score-big" id="duelP1Score">0</span>
+      </div>
+      <div class="duel-question-box">Pertanyaan:<b id="duelP1Q">Total belanja?</b></div>
+      <div class="duel-options" id="duelP1Opts"></div>
+      <div class="duel-status wait" id="duelP1Status">Menunggu...</div>
+    </div>
+    <div class="receipt-wrap"><div class="receipt-paper" id="receiptContent"></div></div>
+    <div class="duel-side p2">
+      <div class="duel-player-header">
+        <span class="duel-name duel-edit-name" id="duelP2Header" title="Klik untuk ganti nama">Player 2</span>
+        <span class="duel-score-big" id="duelP2Score">0</span>
+      </div>
+      <div class="duel-question-box">Pertanyaan:<b id="duelP2Q">Total belanja?</b></div>
+      <div class="duel-options" id="duelP2Opts"></div>
+      <div class="duel-status wait" id="duelP2Status">Menunggu...</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden" id="duelResult" style="background:radial-gradient(ellipse at center, rgba(30,27,75,.94), rgba(15,10,46,.96))">
+  <div class="duel-result-box">
+    <div class="trophy" id="duelTrophy">🏆</div>
+    <h2 id="duelWinnerName">Pemenang!</h2>
+    <p id="duelWinnerMsg" style="color:#64748b;margin:4px 0 8px;font-size:.85rem">Hebat!</p>
+    <div class="duel-result-scores">
+      <div class="duel-result-side p1"><div class="nm" id="duelR1Name">Player 1</div><div class="sc" id="duelR1Score">0</div><div class="tag" id="duelR1Tag">+0 tip</div></div>
+      <div class="duel-result-side p2"><div class="nm" id="duelR2Name">Player 2</div><div class="sc" id="duelR2Score">0</div><div class="tag" id="duelR2Tag">+0 tip</div></div>
+    </div>
+    <button class="main" id="duelNext" style="background:#8b5cf6;box-shadow:0 4px #5b21b6">🔁 MAIN LAGI</button>
+  </div>
+</div>
+
+<script>
+const customers=[
+  {n:'Budi Santoso',g:'m'},{n:'Siti Nurhaliza',g:'f'},{n:'Ahmad Fauzi',g:'m'},{n:'Dewi Lestari',g:'f'},{n:'Rudi Hartono',g:'m'},
+  {n:'Rina Marlina',g:'f'},{n:'Agus Wijaya',g:'m'},{n:'Linda Kusuma',g:'f'},{n:'Joko Susilo',g:'m'},{n:'Maya Anggraini',g:'f'},
+  {n:'Bambang Pamungkas',g:'m'},{n:'Ratna Sari',g:'f'},{n:'Hendra Gunawan',g:'m'},{n:'Putri Ayu',g:'f'},{n:'Eko Prasetyo',g:'m'},
+  {n:'Ani Yuliana',g:'f'},{n:'Dedi Kurniawan',g:'m'},{n:'Wati Setiawan',g:'f'},{n:'Fajar Nugroho',g:'m'},{n:'Indah Permata',g:'f'},
+  {n:'Rizky Pratama',g:'m'},{n:'Ayu Lestari',g:'f'},{n:'Bayu Segara',g:'m'},{n:'Citra Kirana',g:'f'},{n:'Dimas Anggara',g:'m'},
+  {n:'Eka Putri',g:'f'},{n:'Fahri Ramadhan',g:'m'},{n:'Gita Savitri',g:'f'},{n:'Hadi Susanto',g:'m'},{n:'Ika Puspita',g:'f'},
+  {n:'Joni Iskandar',g:'m'},{n:'Kartika Dewi',g:'f'},{n:'Lukman Hakim',g:'m'},{n:'Mega Wati',g:'f'},{n:'Nanda Pratama',g:'m'},
+  {n:'Oki Setiana',g:'f'},{n:'Pandu Winata',g:'m'},{n:'Qori Amelia',g:'f'},{n:'Rahmat Hidayat',g:'m'},{n:'Sinta Bella',g:'f'},
+  {n:'Taufik Hidayat',g:'m'},{n:'Umi Kalsum',g:'f'},{n:'Vina Anggraini',g:'f'},{n:'Wahyu Setiawan',g:'m'},{n:'Yanti Suryani',g:'f'},
+  {n:'Zaki Ahmad',g:'m'},{n:'Alya Farah',g:'f'},{n:'Bagas Prasetyo',g:'m'},{n:'Cindy Claudia',g:'f'},{n:'Doni Tata',g:'m'}
+];
+const maleAvatars=['👨','👨‍🦱','👨‍🦰','🧔','👱‍♂️','👴','🧑'];
+const femaleAvatars=['👩','👩‍🦱','👩‍🦰','👵','👱‍♀️','🧑‍🦰'];
+
+const raw=[
+['Apel','🍎',5000,'Buah'],['Pisang','🍌',4000,'Buah'],['Jeruk','🍊',6000,'Buah'],['Mangga','🥭',9000,'Buah'],['Anggur','🍇',10000,'Buah'],['Semangka','🍉',12000,'Buah'],['Pepaya','🍈',7000,'Buah'],['Nanas','🍍',11000,'Buah'],['Stroberi','🍓',8000,'Buah'],['Pir','🍐',7500,'Buah'],['Kiwi','🥝',9500,'Buah'],['Lemon','🍋',5500,'Buah'],['Kelapa','🥥',8500,'Buah'],['Melon','🍈',10500,'Buah'],['Blueberry','🫐',13000,'Buah'],['Cherry','🍒',14000,'Buah'],['Alpukat','🥑',11000,'Buah'],
+['Susu','🥛',7000,'Minuman'],['Jus','🧃',8000,'Minuman'],['Air Mineral','💧',3000,'Minuman'],['Teh','🍵',5000,'Minuman'],['Yogurt','🥛',8500,'Minuman'],['Cokelat Susu','🥤',9000,'Minuman'],['Kopi','☕',6500,'Minuman'],['Sirup','🍹',12000,'Minuman'],['Soda','🥤',7000,'Minuman'],['Susu Cokelat','🧋',10000,'Minuman'],['Es Teh','🧊',4000,'Minuman'],['Jus Jeruk','🍊',8500,'Minuman'],['Smoothie','🥤',12000,'Minuman'],['Air Kelapa','🥥',7500,'Minuman'],['Milkshake','🥛',11000,'Minuman'],['Lemon Tea','🍋',6000,'Minuman'],['Boba','🧋',13000,'Minuman'],
+['Roti','🍞',4000,'Makanan'],['Beras','🍚',15000,'Makanan'],['Telur','🥚',2500,'Makanan'],['Mi Instan','🍜',3500,'Makanan'],['Keju','🧀',11000,'Makanan'],['Sereal','🥣',13000,'Makanan'],['Tepung','🌾',9000,'Makanan'],['Gula','🧂',8000,'Makanan'],['Sarden','🥫',12000,'Makanan'],['Selai','🍯',14000,'Makanan'],['Mentega','🧈',10000,'Makanan'],['Madu','🍯',16000,'Makanan'],['Oatmeal','🥣',11000,'Makanan'],['Mie Telur','🍜',4500,'Makanan'],['Kecap','🫗',6500,'Makanan'],['Saus','🥫',5500,'Makanan'],['Minyak Goreng','🫒',18000,'Makanan'],
+['Sabun','🧼',5000,'Kebutuhan'],['Pasta Gigi','🪥',9000,'Kebutuhan'],['Sampo','🧴',12000,'Kebutuhan'],['Tisu','🧻',7000,'Kebutuhan'],['Deterjen','🧺',15000,'Kebutuhan'],['Sikat Gigi','🪥',6000,'Kebutuhan'],['Pewangi','🌸',11000,'Kebutuhan'],['Pembersih Lantai','🧴',13000,'Kebutuhan'],['Masker','😷',2500,'Kebutuhan'],['Hand Sanitizer','🧴',10000,'Kebutuhan'],['Sabun Cuci','🧼',8000,'Kebutuhan'],['Spons','🧽',3500,'Kebutuhan'],['Pemutih','🧴',9000,'Kebutuhan'],['Pelembab','🧴',14000,'Kebutuhan'],['Deodoran','🧴',12000,'Kebutuhan'],['Cotton Bud','🧴',4000,'Kebutuhan'],['Sisir','💈',5500,'Kebutuhan'],
+['Keripik','🍿',6000,'Camilan'],['Biskuit','🍪',5000,'Camilan'],['Permen','🍬',2000,'Camilan'],['Kue','🍰',10000,'Camilan'],['Donat','🍩',7000,'Camilan'],['Cokelat','🍫',8500,'Camilan'],['Wafer','🍫',4500,'Camilan'],['Es Krim','🍦',9000,'Camilan'],['Popcorn','🍿',6500,'Camilan'],['Kacang','🥜',5500,'Camilan'],['Kerupuk','🍘',4000,'Camilan'],['Marshmallow','🍡',7500,'Camilan'],['Pretzel','🥨',8000,'Camilan'],['Cookies','🍪',9500,'Camilan'],['Pudding','🍮',6500,'Camilan'],['Kismis','🍇',7000,'Camilan'],
+['Lampu','💡',18000,'Rumah'],['Baterai','🔋',10000,'Rumah'],['Tas Belanja','🛍️',3000,'Rumah'],['Gelas','🥤',5000,'Rumah'],['Piring','🍽️',7000,'Rumah'],['Handuk','🧻',14000,'Rumah'],['Payung','☂️',20000,'Rumah'],['Sapu','🧹',12000,'Rumah'],['Ember','🪣',10000,'Rumah'],['Kantong Sampah','🗑️',6000,'Rumah'],['Sendok','🥄',3500,'Rumah'],['Garpu','🍴',3500,'Rumah'],['Pisau','🔪',15000,'Rumah'],['Talenan','🪵',8500,'Rumah'],['Toples','🫙',9000,'Rumah'],['Keset','🧽',11000,'Rumah']
+];
+const P=raw.map((x,i)=>({id:i,n:x[0],e:x[1],p:x[2],c:x[3]}));
+const $=id=>document.getElementById(id),fmt=n=>new Intl.NumberFormat('id-ID').format(n),get=id=>P.find(p=>p.id==id);
+
+let grade=1,score=0,wallet=0,lives=3,order=[],cart={},money=0,total=0,checked=false;
+let challengeInGrade=1;
+const CHALLENGES_PER_GRADE=10;
+let discount=0;
+let gameMode='normal';
+let agentName='';
+function esc(t){return String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let currentCustomer={name:'Pelanggan Toko Tika',avatar:'👨',gender:'m'};
+
+let flashInterval=null,flashTotal=0,flashLeft=0;
+let chatAnimPending=false,chatAnimTimer=null;
+
+const DUEL_TOTAL_ROUNDS=10;
+const DUEL_ROUND_TIME=15;
+const duelState={active:false,p1name:'Player 1',p2name:'Player 2',p1score:0,p2score:0,round:1,askTotal:true,options:[],correctIdx:-1,p1answer:null,p2answer:null,timeLeft:0,timer:null,locked:false,advanced:false};
+
+const infos=[
+  'Mengenal harga & penjumlahan sederhana',
+  'Penjumlahan, pengurangan & perkalian sederhana',
+  'Perkalian, pembagian & uang',
+  'Operasi campuran & pecahan sederhana',
+  'Desimal, persen & operasi campuran + DISKON',
+  'Diskon, persen, perbandingan & operasi campuran'
+];
+
+function closeM(id){$(id).classList.add('hidden')}
+function openM(id){$(id).classList.remove('hidden')}
+function num(v){return parseInt(String(v).replace(/\D/g,''))||0}
+function update(){$('score').textContent=score;$('wallet').textContent=fmt(wallet);$('grade').textContent=grade;$('lives').textContent=lives}
+function getFinalTotal(){return discount>0?Math.round(total*(100-discount)/100):total}
+function totalCartItems(){return Object.values(cart).reduce((s,q)=>s+q,0)}
+function flashDuration(){return grade<=2?90:grade<=4?75:60}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function pickRandomCustomer(){
+  const c=customers[Math.floor(Math.random()*customers.length)];
+  const pool=c.g==='m'?maleAvatars:femaleAvatars;
+  const avatar=pool[Math.floor(Math.random()*pool.length)];
+  currentCustomer={name:c.n,avatar:avatar,gender:c.g};
+  $('customerName').textContent=c.n;
+  $('customerAvatar').textContent=avatar;
+}
+
+/* ============ LANDSCAPE WARNING COUNTDOWN ============ */
+let lwInterval=null,lwTimeout=null,lwLastOrientation=null;
+
+function startLandscapeCountdown(){
+  const warn=$('landscapeWarn');
+  // reset animasi
+  warn.classList.remove('dismiss');
+  $('lwCountNum').textContent='5';
+  $('lwCountSec').textContent='5';
+  const bar=$('lwProgressBar');
+  bar.classList.remove('run');
+  void bar.offsetWidth; // force reflow
+  bar.classList.add('run');
+
+  clearInterval(lwInterval);
+  clearTimeout(lwTimeout);
+
+  let left=5;
+  lwInterval=setInterval(()=>{
+    left--;
+    $('lwCountNum').textContent=Math.max(0,left);
+    $('lwCountSec').textContent=Math.max(0,left);
+    if(left<=0){
+      clearInterval(lwInterval);
+      hideLandscapeWarn();
+    }
+  },1000);
+}
+function hideLandscapeWarn(){
+  const warn=$('landscapeWarn');
+  if(!warn || warn.classList.contains('dismiss')) return;
+  warn.classList.add('dismiss');
+  document.body.classList.add('portrait-dismissed');
+  clearInterval(lwInterval);
+  clearTimeout(lwTimeout);
+  // setelah animasi fade selesai, sembunyikan total dari DOM
+  lwTimeout=setTimeout(()=>{
+    warn.style.display='none';
+  },400);
+}
+function showLandscapeWarn(){
+  const warn=$('landscapeWarn');
+  warn.style.display='';
+  warn.classList.remove('dismiss');
+  document.body.classList.remove('portrait-dismissed');
+  startLandscapeCountdown();
+}
+function checkOrientation(){
+  const isPortrait = window.matchMedia('(max-width:900px) and (orientation:portrait)').matches && !document.documentElement.classList.contains('force-landscape');
+  if(isPortrait){
+    if(lwLastOrientation!=='p'){
+      lwLastOrientation='p';
+      showLandscapeWarn();
+    }
+  } else {
+    if(lwLastOrientation!=='l'){
+      lwLastOrientation='l';
+      // sembunyikan overlay tanpa set portrait-dismissed
+      const warn=$('landscapeWarn');
+      warn.classList.add('dismiss');
+      warn.style.display='none';
+      document.body.classList.remove('portrait-dismissed');
+      clearInterval(lwInterval);
+      clearTimeout(lwTimeout);
+    }
+  }
+}
+window.addEventListener('resize',()=>{applyForceLandscape();checkOrientation();});
+
+
+/* MODE ICON */
+function refreshModeIcon(){
+  const btn=$('modeBtn');
+  btn.classList.remove('mode-flash-active','mode-duel-active');
+  btn.textContent = gameMode==='flash'?'⚡':gameMode==='duel'?'⚔️':'🎮';
+  if(gameMode==='flash') btn.classList.add('mode-flash-active');
+  if(gameMode==='duel') btn.classList.add('mode-duel-active');
+}
+$('modeBtn').onclick=()=>{
+  document.querySelectorAll('.mode-card').forEach(c=>{
+    c.classList.toggle('selected', c.dataset.mode===gameMode);
+  });
+  openM('modeModal');
+};
+document.querySelectorAll('.mode-card').forEach(card=>{
+  card.onclick=()=>{
+    const m=card.dataset.mode;
+    closeM('modeModal');
+    if(m===gameMode&&m!=='duel') return;
+    if(m==='duel'){
+      $('duelP1Name').value=duelState.p1name!=='Player 1'?duelState.p1name:'';
+      $('duelP2Name').value=duelState.p2name!=='Player 2'?duelState.p2name:'';
+      $('duelError').textContent='';
+      openM('duelSetup');
+      setTimeout(()=>$('duelP1Name').focus(),100);
+      return;
+    }
+    gameMode=m;refreshModeIcon();stopFlash();stopDuel();resetRound();
+  };
+});
+
+/* NOTIFIKASI */
+function showNotif(){
+  $('notifAvatar').textContent=currentCustomer.avatar;
+  $('notifName').textContent=currentCustomer.name;
+  $('notifMsg').textContent='Halo Kak! Saya mau pesan ini ya 😊';
+  openM('notifModal');
+}
+function dismissNotif(){closeM('notifModal')}
+function openNotifChat(){
+  closeM('notifModal');
+  const pf=document.querySelector('.phone-frame');
+  if(pf){
+    pf.style.boxShadow='0 0 0 6px rgba(251,191,36,.65), 0 22px 46px rgba(15,23,42,.22), 0 8px 18px rgba(15,23,42,.12)';
+    setTimeout(()=>{pf.style.boxShadow='';},1300);
+  }
+}
+
+function startFlash(){
+  stopFlash();
+  flashTotal=flashDuration();flashLeft=flashTotal;
+  $('flashTimer').classList.remove('hidden');$('flashTimer').classList.remove('warn');
+  updateFlashDisplay();
+  flashInterval=setInterval(()=>{
+    flashLeft--;updateFlashDisplay();
+    if(flashLeft<=0){stopFlash();flashFail();}
+  },1000);
+}
+function stopFlash(){if(flashInterval){clearInterval(flashInterval);flashInterval=null}$('flashTimer').classList.add('hidden')}
+function updateFlashDisplay(){
+  $('flashTime').textContent=flashLeft;
+  $('flashBar').style.width=Math.max(0,flashLeft/flashTotal*100)+'%';
+  $('flashTimer').classList.toggle('warn',flashLeft<=10);
+}
+function flashFail(){
+  lives=Math.max(0,lives-1);update();
+  if(lives<=0){gameOver();return;}
+  alert('⏰ Waktu Flash Sale habis! −1 nyawa.');
+  resetRound();
+}
+
+function gameOver(){
+  stopFlash();stopDuel();
+  $('rt').innerHTML='💀 <b>Nyawa habis!</b><br>Skor akhir: <b>'+score+'</b><br>Dompet: <b>Rp'+fmt(wallet)+'</b>';
+  $('tip').textContent='0';$('earned').textContent='0';
+  $('progressNote').innerHTML='🔄 Tekan tombol untuk mulai dari Kelas 1 lagi.';
+  $('next').textContent='🔄 MULAI ULANG';
+  $('next').onclick=()=>{
+    closeM('result');
+    grade=1;challengeInGrade=1;score=0;wallet=0;lives=3;
+    $('next').onclick=defaultNext;make();
+  };
+  openM('result');
+}
+
+function resetRound(){stopFlash();stopDuel();make()}
+
+function make(){
+  cart={};checked=false;stopFlash();stopDuel();
+  pickRandomCustomer();
+
+  discount=0;
+  if(grade===5){const o=[10,15,20];discount=o[Math.floor(Math.random()*o.length)];}
+  else if(grade===6){const o=[20,25,30];discount=o[Math.floor(Math.random()*o.length)];}
+  let count=grade<=2?3:grade<=4?4:5;
+  let pool=[...P].sort(()=>Math.random()-.5).slice(0,count);
+  order=pool.map(p=>({id:p.id,q:Math.floor(Math.random()*(grade<=2?2:3))+1}));
+  total=order.reduce((s,o)=>s+get(o.id).p*o.q,0);
+  const finalTotal=getFinalTotal();
+  let cs=[10000,20000,50000,100000,200000].filter(x=>x>=finalTotal);
+  money=cs[Math.floor(Math.random()*cs.length)]||Math.ceil(finalTotal/10000)*10000;
+  $('money-chat').textContent=fmt(money);
+
+  if(agentName) setTimeout(showNotif,250);
+
+  chatAnimPending=true;clearTimeout(chatAnimTimer);
+  const totalBubbles=2+order.length+3;
+  chatAnimTimer=setTimeout(()=>{chatAnimPending=false;},totalBubbles*180+700);
+
+  if(gameMode==='flash') startFlash();
+  render();renderProducts();update();
+}
+
+function render(){
+  const bubbles=[];
+  let idx=0;
+  const animClass=chatAnimPending?' bubble-fade':'';
+  const delayStyle=(i)=>chatAnimPending?' style="animation-delay:'+(i*0.18)+'s"':'';
+
+  const tag='<div class="staff-tag"><span class="staff-dot"></span>🏪 Agen '+esc(agentName||'Toko Tika')+'</div>';
+  bubbles.push('<div class="bubble staff-bubble'+animClass+'"'+delayStyle(idx)+'>'
+    +tag
+    +'Selamat datang di Toko Tika! Saya <b>'+esc(agentName||'Agen')+'</b>, agen Toko Tika. Ada yang bisa saya bantu? 😊'
+    +'</div>');
+  idx++;
+
+  bubbles.push('<div class="bubble greeting'+animClass+'"'+delayStyle(idx)+'>Halo Kak! Saya mau pesan ini ya 😊</div>');
+  idx++;
+
+  order.forEach(o=>{
+    const p=get(o.id),q=cart[o.id]||0,ok=q==o.q;
+    bubbles.push('<div class="bubble order-bubble '+(ok?'ok':'')+animClass+'"'+delayStyle(idx)+'>'
+      +'<div class="order-row"><b>'+p.n+'</b><span class="qty-badge">×'+o.q+'</span></div>'
+      +'<div class="bubble-meta">'+q+'/'+o.q+' <span class="tick">'+(ok?'✓✓':'⏳')+'</span></div>'
+      +'</div>');
+    idx++;
+  });
+
+  bubbles.push('<div class="bubble staff-bubble'+animClass+'"'+delayStyle(idx)+'>'
+    +''+tag+''
+    +'Siap! Pesanan akan diproses tunggu sebentar 🙏'
+    +'</div>');
+  idx++;
+
+  const allDone=order.length&&order.every(o=>(cart[o.id]||0)==o.q);
+  if(allDone){
+    const style1=chatAnimPending?'animation-delay:'+(idx*0.18)+'s':'';
+    bubbles.push('<div class="bubble greeting'+animClass+'"'+style1+'>Terima kasih! Sudah lengkap semua 🙏</div>');
+    idx++;
+    const style2=chatAnimPending?'animation-delay:'+(idx*0.18)+'s':'';
+    bubbles.push('<div class="bubble staff-bubble'+animClass+'"'+style2+'>'
+      +''+tag+''
+      +'Baik saya hitung total dan selisihnya terlebih dahulu ya'
+      +'</div>');
+  }
+
+  const body=$('orders');
+  const atBottom=body.scrollHeight-body.scrollTop-body.clientHeight<40;
+  body.innerHTML=bubbles.join('');
+  if(atBottom) body.scrollTop=body.scrollHeight;
+
+  $('cartBtn').disabled=!allDone;
+  $('cartBtn').classList.toggle('ready',allDone);
+  $('cartBadge').textContent=totalCartItems();
+  refreshProductButtons();
+}
+
+function refreshProductButtons(){
+  P.forEach(p=>{
+    const btn=document.querySelector('#prod-'+p.id+' button');
+    if(!btn)return;
+    const o=order.find(x=>x.id==p.id),q=cart[p.id]||0;
+    if(!o){btn.disabled=false;btn.textContent='+ Ambil';}
+    else if(q>=o.q){btn.disabled=true;btn.textContent='✓ Sudah';}
+    else{btn.disabled=false;btn.textContent='+ Ambil ('+q+'/'+o.q+')';}
+  });
+}
+function renderProducts(){
+  ['Buah','Minuman','Makanan','Kebutuhan','Camilan','Rumah'].forEach(c=>{
+    $(c).innerHTML=P.filter(p=>p.c==c).map(p=>'<div class="product" id="prod-'+p.id+'"><div class="emoji">'+p.e+'</div><div class="name">'+p.n+'</div><div class="price">Rp'+fmt(p.p)+'</div><button onclick="add('+p.id+')">+ Ambil</button></div>').join('');
+  });
+  refreshProductButtons();
+}
+
+function add(id){
+  if(chatAnimPending){chatAnimPending=false;clearTimeout(chatAnimTimer);}
+  let o=order.find(x=>x.id==id);
+  if(!o){
+    lives=Math.max(0,lives-1);update();
+    if(lives<=0){gameOver();return;}
+    alert('❌ Barang ini tidak ada dalam pesanan. −1 nyawa');
+    render();
+    return;
+  }
+  if((cart[id]||0)>=o.q)return;
+  cart[id]=(cart[id]||0)+1;render();
+}
+
+$('cartBtn').onclick=()=>{
+  const allDone=order.length&&order.every(o=>(cart[o.id]||0)==o.q);
+  if(!allDone){alert('⚠️ Masih ada pesanan yang belum diambil.');return;}
+  let html=order.flatMap(o=>Array.from({length:o.q},(_,i)=>'<div class="line"><span>'+get(o.id).n+' '+(i+1)+'</span><b>Rp'+fmt(get(o.id).p)+'</b></div>')).join('');
+  if(discount>0) html+='<div class="line discount-line"><span>💰 Diskon</span><b>'+discount+'%</b></div>';
+  $('manual').innerHTML=html;
+  $('ta').value='';$('ca').value='';$('change').classList.add('hidden');
+  $('cashMsg').textContent='Jumlahkan semua harga pada daftar.';$('cashMsg').className='notice';
+  if(discount>0){
+    $('totalLabel').textContent='Total setelah diskon '+discount+'%:';
+    $('ta').placeholder='Hitung total setelah diskon';
+    $('cashHint').innerHTML='1️⃣ Jumlahkan harga barang. 2️⃣ Kurangi diskon '+discount+'%. 3️⃣ Hitung kembalian.';
+  }else{
+    $('totalLabel').textContent='Total belanja:';
+    $('ta').placeholder='Masukkan hasil penjumlahan';
+    $('cashHint').innerHTML='1️⃣ Masukkan total hasil hitunganmu. 2️⃣ Setelah benar, hitung kembalian sendiri.';
+  }
+  openM('cash');
+};
+
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{$('ta').value=num($('ta').value)+Number(b.dataset.t)});
+document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{$('ca').value=num($('ca').value)+Number(b.dataset.c)});
+$('ct').onclick=()=>{$('ta').value=''};$('cc').onclick=()=>{$('ca').value=''};
+
+$('check').onclick=()=>{
+  const expected=getFinalTotal();
+  if(num($('ta').value)!=expected){
+    lives=Math.max(0,lives-1);update();
+    $('cashMsg').textContent='❌ Total belum benar. −1 nyawa.';
+    $('cashMsg').className='notice bad';
+    if(lives<=0){closeM('cash');gameOver();}
+    return;
+  }
+  checked=true;$('money').textContent=fmt(money);$('change').classList.remove('hidden');
+  $('cashMsg').textContent='✅ Total benar. Sekarang hitung kembalian sendiri.';$('cashMsg').className='notice good';
+};
+
+$('finish').onclick=()=>{
+  if(!checked)return;
+  const correct=money-getFinalTotal();
+  if(num($('ca').value)!=correct){
+    lives=Math.max(0,lives-1);update();
+    $('cashMsg').textContent='❌ Kembalian belum benar. −1 nyawa.';$('cashMsg').className='notice bad';
+    if(lives<=0){closeM('cash');gameOver();}
+    return;
+  }
+  let bonusFlash=0;
+  if(gameMode==='flash'&&flashInterval){bonusFlash=Math.max(0,flashLeft)*3;score+=bonusFlash;stopFlash();}
+  closeM('cash');
+  let earned=100+grade*35, tip=grade==6?6000:grade>=4?4000:2000;
+  score+=earned;wallet+=tip;update();
+  let rtxt='Semua barang benar. Kembalian <b>Rp'+fmt(correct)+'</b> diberikan.';
+  if(discount>0) rtxt+='<br><small>(Diskon '+discount+'% telah diterapkan)</small>';
+  if(bonusFlash>0) rtxt+='<br>⚡ <b>Bonus Flash Sale: +'+bonusFlash+'</b>';
+  showResult(rtxt,tip,earned+(bonusFlash?('+'+bonusFlash):''));
+};
+
+function showResult(rtxt,tip,earnedTxt){
+  $('rt').innerHTML=rtxt;$('tip').textContent=fmt(tip);$('earned').textContent=earnedTxt;
+  const isLast=(challengeInGrade>=CHALLENGES_PER_GRADE)&&(grade===6);
+  $('progressNote').innerHTML=isLast
+    ? '🏆 <b>Selamat! Kamu menyelesaikan SEMUA level Kelas 1–6!</b>'
+    : '📈 <b>Kelas '+grade+'</b> — Tantangan <b>'+challengeInGrade+'/'+CHALLENGES_PER_GRADE+'</b> selesai!';
+  $('next').textContent=isLast?'🔄 MAIN LAGI':'🎯 LANJUT';
+  $('next').onclick=defaultNext;
+  openM('result');
+}
+
+const defaultNext=()=>{
+  closeM('result');
+  challengeInGrade++;
+  if(challengeInGrade>CHALLENGES_PER_GRADE){
+    if(grade<6){grade++;challengeInGrade=1;}
+    else{grade=1;challengeInGrade=1;score=0;wallet=0;lives=3;}
+  }
+  resetRound();
+};
+
+$('new').onclick=()=>{grade=1;challengeInGrade=1;score=0;wallet=0;lives=3;resetRound()};
+$('help').onclick=()=>openM('helpModal');
+
+$('gradeBtn').onclick=()=>{
+  $('infoGrade').textContent=grade;
+  $('infoChallenge').textContent=challengeInGrade+'/'+CHALLENGES_PER_GRADE;
+  $('infoMaterial').textContent=infos[grade-1];
+  if(discount>0){$('infoDiscount').style.display='block';$('infoDiscountVal').textContent=discount;}
+  else $('infoDiscount').style.display='none';
+  const m={
+    normal:{i:'🎮',n:'Mode Normal',d:'Bermain santai tanpa batas waktu.'},
+    flash:{i:'⚡',n:'Mode Flash Sale',d:'Ada batas waktu per pesanan. Bonus skor untuk sisa waktu.'},
+    duel:{i:'⚔️',n:'Mode Duel',d:'2 pemain, 10 ronde struk. Siapa jawab benar duluan, langsung lanjut ronde berikutnya!'}
+  }[gameMode];
+  $('infoModeDesc').innerHTML='<div class="ico">'+m.i+'</div><div class="txt"><b>'+m.n+'</b><small>'+m.d+'</small></div>';
+  openM('infoModal');
+};
+
+$('duelCancel').onclick=()=>{closeM('duelSetup');gameMode='normal';refreshModeIcon();resetRound();};
+$('duelStart').onclick=()=>{
+  const p1=$('duelP1Name').value.trim();
+  const p2=$('duelP2Name').value.trim();
+  if(!p1||!p2){$('duelError').textContent='Kedua nama pemain wajib diisi.';return}
+  duelState.p1name=p1;duelState.p2name=p2;
+  gameMode='duel';refreshModeIcon();closeM('duelSetup');stopFlash();stopDuel();startDuelGame();
+};
+$('duelP1Name').addEventListener('keydown',e=>{if(e.key==='Enter')$('duelP2Name').focus()});
+$('duelP2Name').addEventListener('keydown',e=>{if(e.key==='Enter')$('duelStart').click()});
+
+function stopDuel(){if(duelState.timer){clearInterval(duelState.timer);duelState.timer=null;}duelState.active=false;closeM('duelArena');}
+function generateDuelOrder(){
+  const count=grade<=2?3:grade<=4?4:5;
+  const pool=[...P].sort(()=>Math.random()-.5).slice(0,count);
+  return pool.map(p=>({id:p.id,q:Math.floor(Math.random()*(grade<=2?2:3))+1}));
+}
+function buildOptions(correct){
+  const set=new Set([correct]);
+  const delta=[1000,2000,5000,500,-500,-1000,3000,-2000,1500,-1500,2500,-2500];
+  let guard=0;
+  while(set.size<4&&guard<80){guard++;const d=delta[Math.floor(Math.random()*delta.length)];const v=correct+d;if(v>0&&!set.has(v)) set.add(v);}
+  while(set.size<4) set.add(correct+Math.floor(Math.random()*5000)+1000);
+  const arr=shuffle([...set]);
+  return {opts:arr,correctIdx:arr.indexOf(correct)};
+}
+function startDuelGame(){
+  duelState.active=true;duelState.round=1;duelState.p1score=0;duelState.p2score=0;
+  $('duelP1Header').textContent=duelState.p1name;$('duelP2Header').textContent=duelState.p2name;
+  $('duelP1Score').textContent=0;$('duelP2Score').textContent=0;
+  closeM('duelResult');openM('duelArena');startDuelRound();
+}
+function renderReceipt(){
+  const finalTotal=getFinalTotal();
+  const round=duelState.round;
+  const askTotal=duelState.askTotal;
+  const txid=Math.random().toString(36).substring(2,8).toUpperCase();
+  let itemsHtml='';
+  order.forEach(o=>{const p=get(o.id);itemsHtml+='<div class="receipt-item"><div class="receipt-item-row"><span class="receipt-item-name">'+p.n+'</span><span>Rp'+fmt(p.p*o.q)+'</span></div><div class="receipt-item-sub">'+o.q+' × Rp'+fmt(p.p)+'</div></div>';});
+  const totalLine=askTotal?'<div class="receipt-line answer-target"><span>TOTAL</span><span class="qmark">Rp ? ? ?</span></div>':'<div class="receipt-line big"><span>TOTAL</span><span class="val">Rp'+fmt(finalTotal)+'</span></div>';
+  const kembalianLine=askTotal?'<div class="receipt-line"><span>Kembalian</span><span class="val">— — —</span></div>':'<div class="receipt-line answer-target"><span>KEMBALIAN</span><span class="qmark">Rp ? ? ?</span></div>';
+  const discountLine=discount>0?'<div class="receipt-line" style="color:#b91c1c"><span>Diskon '+discount+'%</span><span>-Rp'+fmt(total-finalTotal)+'</span></div>':'';
+  const now2=new Date();
+  const dateStr=String(now2.getDate()).padStart(2,'0')+'/'+String(now2.getMonth()+1).padStart(2,'0')+'/'+now2.getFullYear()+' '+String(now2.getHours()).padStart(2,'0')+':'+String(now2.getMinutes()).padStart(2,'0');
+  $('receiptContent').innerHTML=
+    '<div class="receipt-head"><div class="brand">★ TOKO TIKA ★</div><div class="sub">STRUK #'+round+' / '+DUEL_TOTAL_ROUNDS+'</div></div>'
+    +'<div class="receipt-div">= = = = = = = = = = = = = = = = =</div>'
+    +'<div class="receipt-meta"><div class="receipt-meta-row"><span>No. Tx</span><span>#'+txid+'</span></div><div class="receipt-meta-row"><span>Tanggal</span><span>'+dateStr+'</span></div><div class="receipt-meta-row"><span>Kasir</span><span>DUEL MODE</span></div></div>'
+    +'<div class="receipt-div">- - - - - - - - - - - - - - - - -</div>'
+    +'<div class="receipt-items">'+itemsHtml+'</div>'
+    +'<div class="receipt-div">- - - - - - - - - - - - - - - - -</div>'
+    +'<div class="receipt-total-block">'+discountLine+totalLine+'<div class="receipt-line"><span>TUNAI</span><span class="val">Rp'+fmt(money)+'</span></div>'+kembalianLine+'</div>'
+    +'<div class="receipt-div">= = = = = = = = = = = = = = = = =</div>'
+    +'<div class="receipt-barcode"></div>'
+    +'<div class="receipt-thanks">~ TERIMA KASIH ~</div>'
+    +'<div class="receipt-foot">Barang yang sudah dibeli<br>tidak dapat ditukar kembali</div>';
+}
+function startDuelRound(){
+  duelState.locked=false;duelState.advanced=false;
+  duelState.p1answer=null;duelState.p2answer=null;
+  duelState.timeLeft=DUEL_ROUND_TIME;
+  order=generateDuelOrder();
+  total=order.reduce((s,o)=>s+get(o.id).p*o.q,0);
+  discount=0;
+  if(grade===5){const o=[10,15,20];discount=o[Math.floor(Math.random()*o.length)];}
+  else if(grade===6){const o=[20,25,30];discount=o[Math.floor(Math.random()*o.length)];}
+  const finalTotal=getFinalTotal();
+  let cs=[10000,20000,50000,100000,200000].filter(x=>x>=finalTotal);
+  money=cs[Math.floor(Math.random()*cs.length)]||Math.ceil(finalTotal/10000)*10000;
+  duelState.askTotal=(duelState.round%2===1);
+  const correctAns=duelState.askTotal?finalTotal:(money-finalTotal);
+  const {opts,correctIdx}=buildOptions(correctAns);
+  duelState.options=opts;duelState.correctIdx=correctIdx;
+  $('duelRoundPill').textContent='Ronde '+duelState.round+' / '+DUEL_TOTAL_ROUNDS;
+  const q=duelState.askTotal?'💰 Total belanja?':'💵 Kembalian?';
+  $('duelP1Q').textContent=q;$('duelP2Q').textContent=q;
+  const mkOpts=(side)=>opts.map((v,i)=>'<button class="duel-opt" data-side="'+side+'" data-idx="'+i+'">Rp '+fmt(v)+'</button>').join('');
+  $('duelP1Opts').innerHTML=mkOpts('p1');$('duelP2Opts').innerHTML=mkOpts('p2');
+  document.querySelectorAll('#duelArena .duel-opt').forEach(b=>b.onclick=()=>duelAnswer(b.dataset.side,Number(b.dataset.idx)));
+  $('duelP1Status').textContent='⏱ '+duelState.timeLeft+'s';$('duelP1Status').className='duel-status wait';
+  $('duelP2Status').textContent='⏱ '+duelState.timeLeft+'s';$('duelP2Status').className='duel-status wait';
+  renderReceipt();
+  if(duelState.timer)clearInterval(duelState.timer);
+  duelState.timer=setInterval(()=>{
+    if(duelState.advanced){clearInterval(duelState.timer);duelState.timer=null;return;}
+    duelState.timeLeft--;
+    if(duelState.p1answer===null) $('duelP1Status').textContent='⏱ '+duelState.timeLeft+'s';
+    if(duelState.p2answer===null) $('duelP2Status').textContent='⏱ '+duelState.timeLeft+'s';
+    if(duelState.timeLeft<=0){
+      clearInterval(duelState.timer);duelState.timer=null;
+      if(duelState.advanced) return;
+      duelState.advanced=true;duelState.locked=true;
+      ['p1','p2'].forEach(side=>{
+        const opts=document.querySelectorAll('#duelArena [data-side="'+side+'"]');
+        opts.forEach((b,i)=>{b.disabled=true;if(i===duelState.correctIdx) b.classList.add('correct');else b.classList.add('dim');});
+        const st=$('duel'+side.toUpperCase()+'Status');
+        st.textContent='⏰ Waktu habis!';st.className='duel-status wait';
+      });
+      setTimeout(()=>advanceDuelRound(),1500);
+    }
+  },1000);
+}
+function advanceDuelRound(){
+  if(duelState.round>=DUEL_TOTAL_ROUNDS) endDuel();
+  else{duelState.round++;startDuelRound();}
+}
+function duelAnswer(side,idx,timeout){
+  if(duelState.locked||duelState.advanced) return;
+  if((side==='p1'&&duelState.p1answer!==null)||(side==='p2'&&duelState.p2answer!==null)) return;
+  const correct=idx===duelState.correctIdx;
+  const baseScore=correct?100:0;
+  const timeBonus=correct?Math.max(0,duelState.timeLeft)*10:0;
+  const gained=baseScore+timeBonus;
+  if(side==='p1'){duelState.p1answer={idx,correct,gained};if(correct)duelState.p1score+=gained;$('duelP1Score').textContent=duelState.p1score;}
+  else{duelState.p2answer={idx,correct,gained};if(correct)duelState.p2score+=gained;$('duelP2Score').textContent=duelState.p2score;}
+  const opts=document.querySelectorAll('#duelArena [data-side="'+side+'"]');
+  opts.forEach((b,i)=>{b.disabled=true;if(i===duelState.correctIdx) b.classList.add('correct');else if(i===idx&&!correct) b.classList.add('wrong');else if(i!==idx) b.classList.add('dim');});
+  const status=$('duel'+side.toUpperCase()+'Status');
+  if(timeout) status.textContent='⏰ Waktu habis!';
+  else if(correct) status.textContent='✓ Benar! +'+gained;
+  else status.textContent='✗ Salah';
+  status.className='duel-status '+(correct?'ok':'wait');
+  if(correct && !duelState.advanced){
+    duelState.advanced=true;duelState.locked=true;
+    if(duelState.timer){clearInterval(duelState.timer);duelState.timer=null;}
+    const otherSide=side==='p1'?'p2':'p1';
+    const otherOpts=document.querySelectorAll('#duelArena [data-side="'+otherSide+'"]');
+    otherOpts.forEach((b,i)=>{b.disabled=true;if(i===duelState.correctIdx) b.classList.add('correct');else b.classList.add('dim');});
+    const otherStatus=$('duel'+otherSide.toUpperCase()+'Status');
+    otherStatus.textContent='⏭ Dilewati';otherStatus.className='duel-status wait';
+    setTimeout(()=>advanceDuelRound(),1200);
+    return;
+  }
+  if(duelState.p1answer!==null&&duelState.p2answer!==null&&!duelState.advanced){
+    duelState.advanced=true;duelState.locked=true;
+    if(duelState.timer){clearInterval(duelState.timer);duelState.timer=null;}
+    setTimeout(()=>advanceDuelRound(),1200);
+  }
+}
+function endDuel(){
+  if(duelState.timer){clearInterval(duelState.timer);duelState.timer=null;}
+  closeM('duelArena');
+  const p1=duelState.p1score,p2=duelState.p2score;
+  const winner=p1>p2?'p1':p2>p1?'p2':'tie';
+  const bonus=grade===6?300:grade>=4?200:100;
+  let wname,msg,trophy;
+  if(winner==='p1'){wname=duelState.p1name;trophy='🏆';msg='Hebat! '+duelState.p1name+' menang duel ini!';}
+  else if(winner==='p2'){wname=duelState.p2name;trophy='🏆';msg='Hebat! '+duelState.p2name+' menang duel ini!';}
+  else{wname='Seri!';trophy='🤝';msg='Pertandingan seru, hasil imbang!';}
+  $('duelTrophy').textContent=trophy;$('duelWinnerName').textContent=wname;$('duelWinnerMsg').textContent=msg;
+  $('duelR1Name').textContent=duelState.p1name;$('duelR2Name').textContent=duelState.p2name;
+  $('duelR1Score').textContent=p1;$('duelR2Score').textContent=p2;
+  const p1Win=winner==='p1',p2Win=winner==='p2';
+  const p1Tip=p1Win?bonus:(winner==='tie'?Math.round(bonus*0.6):Math.round(bonus*0.3));
+  const p2Tip=p2Win?bonus:(winner==='tie'?Math.round(bonus*0.6):Math.round(bonus*0.3));
+  $('duelR1Tag').textContent='+Rp'+fmt(p1Tip*100);
+  $('duelR2Tag').textContent='+Rp'+fmt(p2Tip*100);
+  wallet+=(p1Tip*100)+(p2Tip*100);score+=p1+p2;update();
+  $('duelNext').textContent='🔁 MAIN LAGI';
+  $('duelNext').onclick=()=>{closeM('duelResult');duelState.active=false;startDuelGame();};
+  openM('duelResult');
+}
+$('duelClose').onclick=()=>{
+  if(!confirm('Keluar dari duel dan kembali ke mode normal?'))return;
+  stopDuel();gameMode='normal';refreshModeIcon();resetRound();
+};
+$('duelP1Header').onclick=()=>{const n=prompt('Nama Pemain 1:',duelState.p1name);if(n&&n.trim()){duelState.p1name=n.trim();$('duelP1Header').textContent=n.trim();}};
+$('duelP2Header').onclick=()=>{const n=prompt('Nama Pemain 2:',duelState.p2name);if(n&&n.trim()){duelState.p2name=n.trim();$('duelP2Header').textContent=n.trim();}};
+
+const SHELF_CATS=['Buah','Minuman','Makanan','Kebutuhan','Camilan','Rumah'];
+const SHELF_LABELS={Buah:'🍎 Buah',Minuman:'🥛 Minuman',Makanan:'🍞 Makanan',Kebutuhan:'🧼 Kebutuhan',Camilan:'🍿 Camilan',Rumah:'🏠 Rumah'};
+let currentShelf=0;
+function initSlider(){
+  $('categoryTabs').innerHTML=SHELF_CATS.map((c,i)=>`<button data-idx="${i}" onclick="slideTo(${i})">${SHELF_LABELS[c]}</button>`).join('');
+  $('shelfDots').innerHTML=SHELF_CATS.map((c,i)=>`<i data-idx="${i}" onclick="slideTo(${i})"></i>`).join('');
+  updateSliderUI(0);
+  $('shelves').addEventListener('scroll',()=>{
+    const s=$('shelves');const w=s.firstElementChild?s.firstElementChild.offsetWidth+12:1;
+    updateSliderUI(Math.round(s.scrollLeft/w));
+  },{passive:true});
+}
+function slideTo(idx){
+  idx=Math.max(0,Math.min(SHELF_CATS.length-1,idx));
+  const s=$('shelves'),sh=s.children[idx];if(!sh)return;
+  s.scrollTo({left:sh.offsetLeft-(s.clientWidth-sh.clientWidth)/2,behavior:'smooth'});
+  updateSliderUI(idx);
+}
+function slideBy(d){slideTo(currentShelf+d)}
+function updateSliderUI(i){
+  currentShelf=i;
+  document.querySelectorAll('#categoryTabs button').forEach((b,k)=>b.classList.toggle('active',k===i));
+  document.querySelectorAll('#shelfDots i').forEach((d,k)=>d.classList.toggle('on',k===i));
+}
+window.slideTo=slideTo;window.slideBy=slideBy;
+window.dismissNotif=dismissNotif;
+window.openNotifChat=openNotifChat;
+
+/* ============ AUTO-LANDSCAPE JS ============ */
+function applyForceLandscape(){
+  const w=window.innerWidth,h=window.innerHeight,r=document.documentElement;
+  const force=w<h && w<=900;
+  r.classList.toggle('force-landscape',force);
+  r.classList.toggle('force-short',force&&w<=420);
+  if(force){r.style.setProperty('--fw',h+'px');r.style.setProperty('--fh',w+'px');}
+}
+function tryNativeLandscape(){
+  try{
+    if(!(window.innerWidth<=900||window.innerHeight<=900))return;
+    const so=screen.orientation;
+    if(!so||!so.lock)return;
+    const el=document.documentElement;
+    const go=()=>so.lock('landscape').catch(()=>{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{})});
+    if(!document.fullscreenElement&&el.requestFullscreen){el.requestFullscreen().then(go).catch(()=>{});}
+    else go();
+  }catch(e){}
+}
+window.addEventListener('resize',applyForceLandscape);
+window.addEventListener('orientationchange',()=>setTimeout(()=>{applyForceLandscape();checkOrientation();},150));
+document.addEventListener('pointerdown',function once(){tryNativeLandscape();document.removeEventListener('pointerdown',once);},{once:true});
+applyForceLandscape();
+
+initSlider();
+refreshModeIcon();
+make();
+function startAsAgent(){
+  tryNativeLandscape();
+  const v=$('agentNameInput').value.trim();
+  if(!v){$('agentNameInput').focus();return;}
+  agentName=v.slice(0,20);
+  closeM('agentModal');
+  chatAnimPending=true;clearTimeout(chatAnimTimer);
+  chatAnimTimer=setTimeout(()=>{chatAnimPending=false;},(2+order.length+3)*180+700);
+  render();
+  setTimeout(showNotif,(2*180)+400);
+}
+$('agentStart').onclick=startAsAgent;
+$('agentNameInput').addEventListener('keydown',e=>{if(e.key==='Enter')startAsAgent();});
+
+$('coverPlay').onclick=()=>{
+  try{
+    const el=document.documentElement;
+    const rf=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+    if(rf&&!document.fullscreenElement&&!document.webkitFullscreenElement){
+      const r=rf.call(el);
+      const lock=()=>{try{screen.orientation&&screen.orientation.lock&&(window.innerWidth<=900||window.innerHeight<=900)&&screen.orientation.lock('landscape').catch(()=>{})}catch(e){}};
+      if(r&&r.then)r.then(lock).catch(()=>{});else lock();
+    }
+  }catch(e){}
+  const c=$('cover');c.classList.add('out');
+  setTimeout(()=>{c.style.display='none';$('agentNameInput').focus();},450);
+};
+
+applyForceLandscape();
+checkOrientation();
+</script>
+</body></html>
